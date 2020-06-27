@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Rating from "./Rating";
+import Ratings from "./Ratings";
 import axios from "axios";
 
 class App extends Component {
@@ -102,7 +102,7 @@ class App extends Component {
           );
         })}
 
-        <Rating score={4.25} />
+        <Ratings bookScore={4.59} movieScore={3.25} />
       </div>
     );
   }
