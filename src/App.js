@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import Ratings from "./Ratings";
+import axios from "axios";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       books: [],
-      movies: []
-    }
+      movies: [],
+    };
   }
 
   componentDidMount() {
@@ -18,44 +19,45 @@ class App extends Component {
   moviesApi = async () => {
     try {
       let movies = await axios({
-        method: 'GET',
-        url: 'https://api.themoviedb.org/3/search/movie?',
-        paramType: 'json',
+        method: "GET",
+        url: "https://api.themoviedb.org/3/search/movie?",
+        paramType: "json",
         params: {
-          api_key: '4851783a531664a8fc58abf098309ada',
-          query: `Lord of the Rings`
-        }
-      })
+          api_key: "4851783a531664a8fc58abf098309ada",
+          query: `Lord of the Rings`,
+        },
+      });
       console.log(movies.data);
       this.setState({
-        movies
-      })
+        movies,
+      });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   searchBooks = async () => {
     try {
       let res = await axios({
-        method: 'GET',
-        url: 'http://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?',
+        method: "GET",
+        url:
+          "http://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
         params: {
-          key: 'odsRW5CclbTNlqFbZCaC4A',
-          q: `The DaVinci Code`
-        }
-      })
+          key: "odsRW5CclbTNlqFbZCaC4A",
+          q: `The DaVinci Code`,
+        },
+      });
       const books = this.parseXMLResponse(res.data);
       this.setState({
-        books: [...books]
-      })
+        books: [...books],
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   // parse string xml received from goodreads api
-  parseXMLResponse = response => {
+  parseXMLResponse = (response) => {
     const parser = new DOMParser();
     const XMLResponse = parser.parseFromString(response, "application/xml");
     const parseError = XMLResponse.getElementsByTagName("parsererror");
@@ -63,11 +65,11 @@ class App extends Component {
     if (parseError.length) {
       this.setState({
         error: "There was an error fetching results.",
-        fetchingData: false
+        fetchingData: false,
       });
     } else {
       const XMLresults = new Array(...XMLResponse.getElementsByTagName("work"));
-      const searchResults = XMLresults.map(result => this.XMLToJson(result));
+      const searchResults = XMLresults.map((result) => this.XMLToJson(result));
       return searchResults;
     }
   };
@@ -75,10 +77,10 @@ class App extends Component {
   // Function to convert simple XML document into JSON.
   // Loops through each child and saves it as key, value pair
   // if there are sub-children, call the same function recursively on its children.
-  XMLToJson = XML => {
+  XMLToJson = (XML) => {
     const allNodes = new Array(...XML.children);
     const jsonResult = {};
-    allNodes.forEach(node => {
+    allNodes.forEach((node) => {
       if (node.children.length) {
         jsonResult[node.nodeName] = this.XMLToJson(node);
       } else {
@@ -90,15 +92,17 @@ class App extends Component {
   render() {
     return (
       <div>
-        {this.state.books.map(book => {
+        {this.state.books.map((book) => {
           let bestBook = book.best_book;
           return (
             <>
               <h1>{bestBook.title}</h1>
               <p>{bestBook.author.name}</p>
             </>
-          )
+          );
         })}
+
+        <Ratings bookScore={4.59} movieScore={3.25} />
       </div>
     );
   }

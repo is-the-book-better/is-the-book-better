@@ -1,6 +1,8 @@
 @import "./settings";
+@import "./fontsAndColors";
 @import "./components/ratings";
 
-body {
-  border: 1px solid red;
-}
+/*
+colors: $darkBlue, $lightBlue, $green
+fonts: $sans-serif, $serif
+*/
