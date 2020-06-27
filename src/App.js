@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Ratings from "./Ratings";
+import Description from "./Description"
 import axios from "axios";
 
 class App extends Component {
@@ -29,7 +30,7 @@ class App extends Component {
       });
       console.log(movies.data);
       this.setState({
-        movies,
+        movies : movies.data
       });
     } catch (error) {
       console.log(error);
@@ -103,6 +104,7 @@ class App extends Component {
         })}
 
         <Ratings bookScore={4.59} movieScore={3.25} />
+        <Description />
       </div>
     );
   }
