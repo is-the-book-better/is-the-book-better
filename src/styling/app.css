@@ -372,4 +372,10 @@ textarea {
 .ratings .rating h3 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  font-family: "Maitree", serif;
 }
+
+/*
+colors: $darkBlue, $lightBlue, $green
+fonts: $sans-serif, $serif
+*/
