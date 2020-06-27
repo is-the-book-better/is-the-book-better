@@ -338,7 +338,30 @@ textarea {
   overflow: hidden;
 }
 
+.ratings-wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+
 .ratings {
+  padding: 1.5rem 0;
+  background-color: #ace8cd;
+  color: #261870;
+}
+
+.ratings h3 {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+  font-family: "Maitree", serif;
+  text-align: center;
+}
+
+.ratings i {
+  color: #5da9c2;
+  font-size: 1.125rem;
+}
+
+.apiRatings {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -349,9 +372,10 @@ textarea {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-bottom: 1rem;
 }
 
-.ratings .rating {
+.apiRatings .rating {
   width: 100%;
   padding: 1rem;
   display: -webkit-box;
@@ -369,10 +393,34 @@ textarea {
           align-items: center;
 }
 
-.ratings .rating h3 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  font-family: "Maitree", serif;
+.voteRatings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.vote {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.vote i {
+  font-size: 4.5rem;
 }
 
 /*

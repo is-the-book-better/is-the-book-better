@@ -1,6 +1,6 @@
 import React from "react";
 
-const Rating = ({ score }) => {
+const Rating = ({ score, medium }) => {
   // FontAwesome Classes for Stars
   const fullStar = "fas fa-star";
   const halfStar = "fas fa-star-half-alt";
@@ -28,8 +28,8 @@ const Rating = ({ score }) => {
     <div className="rating">
       <h3>{score}</h3>
       <div className="stars">
-        {stars.map((star) => {
-          return <i className={star}></i>;
+        {stars.map((star, index) => {
+          return <i className={star} key={medium + "Star" + (index + 1)}></i>;
         })}
       </div>
     </div>
