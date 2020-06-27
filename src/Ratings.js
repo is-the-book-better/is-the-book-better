@@ -1,7 +1,13 @@
 import React from "react";
+import Rating from "./Rating";
 
-const Rating = () => {
-  return <h1>Hello World!</h1>;
+const Ratings = ({ bookScore, movieScore }) => {
+  return (
+    <div className="ratings">
+      <Rating score={bookScore} />
+      <Rating score={movieScore} />
+    </div>
+  );
 };
 
-export default Rating;
+export default Ratings;
