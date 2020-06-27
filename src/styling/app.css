@@ -361,7 +361,7 @@ textarea {
   font-size: 1.125rem;
 }
 
-.APIratings {
+.apiRatings {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -375,7 +375,7 @@ textarea {
   margin-bottom: 1rem;
 }
 
-.APIratings .rating {
+.apiRatings .rating {
   width: 100%;
   padding: 1rem;
   display: -webkit-box;
@@ -391,6 +391,36 @@ textarea {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.voteRatings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.vote {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.vote i {
+  font-size: 4.5rem;
 }
 
 /*

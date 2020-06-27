@@ -1,10 +1,9 @@
 import React from "react";
 
-const Vote = () => {
+const Vote = ({ medium }) => {
   return (
     <div className="vote">
-      <h4>Hello</h4>
-      <p>Lorem ipsum dolor sit amet.</p>
+      <i class="far fa-thumbs-up" id={medium + "Vote"}></i>
     </div>
   );
 };
