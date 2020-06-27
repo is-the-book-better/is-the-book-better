@@ -24,12 +24,13 @@ const Rating = ({ score }) => {
     }
   }
 
-  return <h1>hello</h1>;
-  // <div className="rating">
-  //   {stars.map((star) => {
-  //     return <i className={star}></i>;
-  //   })}
-  // </div>
+  return (
+    <div className="rating">
+      {stars.map((star) => {
+        return <i className={star}></i>;
+      })}
+    </div>
+  );
 };
 
 export default Rating;
