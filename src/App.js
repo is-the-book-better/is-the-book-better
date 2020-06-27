@@ -6,50 +6,81 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      query: 'the Davinci Code',
       books: [],
       movies: [],
     };
   }
 
   componentDidMount() {
-    this.searchBooks();
-    this.moviesApi();
+    this.searchResults();
+    // this.searchBooks();
+    // this.searchMovies();
   }
 
-  moviesApi = async () => {
+  // searchBooks = () => {
+  //   axios({
+  //     method: "GET",
+  //     url:
+  //       "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
+  //     params: {
+  //       key: "odsRW5CclbTNlqFbZCaC4A",
+  //       q: this.state.query,
+  //     },
+  //   }).then(res => {
+  //     const books = this.parseXMLResponse(res.data);
+  //     this.setState({
+  //       books
+  //     })
+  //   })
+  // }
+
+  // searchMovies = () => {
+  //   axios({
+  //     method: "GET",
+  //     url: "https://api.themoviedb.org/3/search/movie?",
+  //     paramType: "json",
+  //     params: {
+  //       api_key: "4851783a531664a8fc58abf098309ada",
+  //       query: this.state.query,
+  //     },
+  //   }).then(res => {
+  //     const movies = res.data.results;
+  //     this.setState({
+  //       movies
+  //     })
+  //   })
+  // }
+
+  searchResults = async () => {
+    console.log(this.state.query)
     try {
-      let movies = await axios({
+      let res = await axios({
+        method: "GET",
+        url:
+          "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
+        params: {
+          key: "odsRW5CclbTNlqFbZCaC4A",
+          q: this.state.query,
+        },
+      });
+
+      let moviesApi = await axios({
         method: "GET",
         url: "https://api.themoviedb.org/3/search/movie?",
         paramType: "json",
         params: {
           api_key: "4851783a531664a8fc58abf098309ada",
-          query: `Lord of the Rings`,
+          query: this.state.query,
         },
       });
-      console.log(movies.data);
-      this.setState({
-        movies,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  searchBooks = async () => {
-    try {
-      let res = await axios({
-        method: "GET",
-        url:
-          "http://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
-        params: {
-          key: "odsRW5CclbTNlqFbZCaC4A",
-          q: `The DaVinci Code`,
-        },
-      });
       const books = this.parseXMLResponse(res.data);
+      const movies = moviesApi.data.results;
+      console.log(books)
       this.setState({
-        books: [...books],
+        books,
+        movies
       });
     } catch (error) {
       console.log(error);
@@ -73,7 +104,6 @@ class App extends Component {
       return searchResults;
     }
   };
-
   // Function to convert simple XML document into JSON.
   // Loops through each child and saves it as key, value pair
   // if there are sub-children, call the same function recursively on its children.
@@ -89,21 +119,37 @@ class App extends Component {
     });
     return jsonResult;
   };
-  render() {
-    return (
-      <div>
-        {this.state.books.map((book) => {
-          let bestBook = book.best_book;
-          return (
-            <>
-              <h1>{bestBook.title}</h1>
-              <p>{bestBook.author.name}</p>
-            </>
-          );
-        })}
 
-        <Ratings bookScore={4.59} movieScore={3.25} />
-      </div>
+  handleChange = (event) => {
+    this.setState({
+      query: event.target.value
+    })
+  }
+  handleSubmit = () => {
+    this.searchBooks(this.state.query);
+    console.log(this.state.query);
+    this.setState({
+      query: ''
+    })
+  }
+  render() {
+    const { movies, books } = this.state;
+    const popMovie = movies[0];
+    const popBooks = books[0];
+    return (
+      <header>
+        <h1>Is the Book Better?</h1>
+        <p>Enter the item below to find out</p>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="searchBar">Search Bar</label>
+          <input type="search" name="query" id="searchBar" onChange={this.handleChange} value={this.state.query} />
+          <button type="submit" onClick={this.handleSubmit}>Submit</button>
+        </form>
+        {console.log(popMovie)}
+        {console.log(popBooks)}
+
+        <Ratings bookScore={4.59} movieScore={3.25} movie={popMovie} books={popBooks} />
+      </header>
     );
   }
 }
