@@ -6,7 +6,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      query: 'the Davinci Code',
+      query: '',
       books: [],
       movies: [],
     };
@@ -14,43 +14,7 @@ class App extends Component {
 
   componentDidMount() {
     this.searchResults();
-    // this.searchBooks();
-    // this.searchMovies();
   }
-
-  // searchBooks = () => {
-  //   axios({
-  //     method: "GET",
-  //     url:
-  //       "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
-  //     params: {
-  //       key: "odsRW5CclbTNlqFbZCaC4A",
-  //       q: this.state.query,
-  //     },
-  //   }).then(res => {
-  //     const books = this.parseXMLResponse(res.data);
-  //     this.setState({
-  //       books
-  //     })
-  //   })
-  // }
-
-  // searchMovies = () => {
-  //   axios({
-  //     method: "GET",
-  //     url: "https://api.themoviedb.org/3/search/movie?",
-  //     paramType: "json",
-  //     params: {
-  //       api_key: "4851783a531664a8fc58abf098309ada",
-  //       query: this.state.query,
-  //     },
-  //   }).then(res => {
-  //     const movies = res.data.results;
-  //     this.setState({
-  //       movies
-  //     })
-  //   })
-  // }
 
   searchResults = async () => {
     console.log(this.state.query)
@@ -124,25 +88,30 @@ class App extends Component {
     this.setState({
       query: event.target.value
     })
+    this.searchResults();
   }
-  handleSubmit = () => {
-    this.searchBooks(this.state.query);
-    console.log(this.state.query);
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.searchResults();
     this.setState({
       query: ''
     })
   }
+
   render() {
     const { movies, books } = this.state;
     const popMovie = movies[0];
     const popBooks = books[0];
+
+
     return (
       <header>
         <h1>Is the Book Better?</h1>
         <p>Enter the item below to find out</p>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="searchBar">Search Bar</label>
-          <input type="search" name="query" id="searchBar" onChange={this.handleChange} value={this.state.query} />
+          <input type="search" name="query" id="searchBar" onChange={this.handleChange} value={this.state.query} placeholder="Enter here..." />
           <button type="submit" onClick={this.handleSubmit}>Submit</button>
         </form>
         {console.log(popMovie)}
