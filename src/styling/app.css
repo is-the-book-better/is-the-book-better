@@ -338,10 +338,6 @@ textarea {
   overflow: hidden;
 }
 
-.ratings {
-  background: blue;
-}
-
-body {
-  border: 1px solid red;
+.rating {
+  border: 1px solid blue;
 }
