@@ -26,9 +26,12 @@ const Rating = ({ score }) => {
 
   return (
     <div className="rating">
-      {stars.map((star) => {
-        return <i className={star}></i>;
-      })}
+      <h3>{score}</h3>
+      <div className="stars">
+        {stars.map((star) => {
+          return <i className={star}></i>;
+        })}
+      </div>
     </div>
   );
 };

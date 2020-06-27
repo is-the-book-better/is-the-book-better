@@ -102,7 +102,7 @@ class App extends Component {
           );
         })}
 
-        <Rating score={3.26} />
+        <Rating score={4.25} />
       </div>
     );
   }
