@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import MainComp from "./MainComp"
 import Ratings from "./Ratings";
 import Description from "./Description"
 import axios from "axios";
@@ -102,7 +103,7 @@ class App extends Component {
             </>
           );
         })}
-
+        <MainComp />
         <Ratings bookScore={4.59} movieScore={3.25} />
         <Description />
       </div>
