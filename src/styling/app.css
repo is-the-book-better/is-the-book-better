@@ -375,6 +375,37 @@ textarea {
   font-family: "Maitree", serif;
 }
 
+.descriptionWrapper {
+  width: 100%;
+  font-family: "Maitree", serif;
+  line-height: 28px;
+  padding: 10px;
+}
+
+.descriptionWrapper div {
+  margin: 20px 0;
+}
+
+.descriptionWrapper h2 {
+  text-align: center;
+  color: #261870;
+  font-size: 2rem;
+  margin: 5px;
+}
+
+.descriptionWrapper p {
+  padding: 5px 15px;
+  font-size: 1.1rem;
+}
+
+@media (min-width: 790px) {
+  .descriptionWrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
 /*
 colors: $darkBlue, $lightBlue, $green
 fonts: $sans-serif, $serif

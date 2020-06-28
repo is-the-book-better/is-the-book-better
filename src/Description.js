@@ -4,20 +4,21 @@
 import React from "react";
 
 const Description = () => {
-    let bookDescriptionTitle = `title of book`;
-    let movieDescriptionTitle = `title of movie`;
-    let bookDescriptionText = `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam necessitatibus totam, magnam rem reprehenderit corporis cupiditate ipsam, sed tempore ducimus fugit officiis vero laudantium esse?`
-    let movieDescriptionText= `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quas laudantium voluptatibus fuga, exercitationem mollitia reprehenderit accusamus inventore tenetur modi, velit optio quidem. Sapiente, dolorum saepe.`;
+    let bookDescriptionTitle = `Title of Book`;
+    let movieDescriptionTitle = `Title of Movie`;
+    let bookDescriptionText = `hi guys dolor sit amet consectr adsicing elit. Veniam neitibus totam, magnam remnderit corrtion dolor sit amet consectr adsicing elit. Veniam neitibus totam, magnam remnderit corris cuptate ipsam, sed tempore ducimus fugit ofiis vero lantium esse?`
+    let movieDescriptionText= `description dolor sit amet consectr adsicing elit. Veniam neitibus totam, magnam remnderit corris cuptate ipsam, sed tempore ducimus fugit ofiis vero totam, magnam remnderit corris cuptate ipsam, sed tempore ducimus fugit ofiis vero lantium esse?`;
   return (
     <div className="descriptionWrapper">
-        <div className="bookWrapper">
-            <h2>{bookDescriptionTitle}</h2>
-            <p>{bookDescriptionText}</p>
-        </div>
-        <div className="movieWrapper"></div>
-            <h2>{movieDescriptionTitle}</h2>
-            <p>{movieDescriptionText}</p>
-        </div>
+      <div className="bookWrapper">
+          <h2>{bookDescriptionTitle}</h2>
+          <p>{bookDescriptionText}</p>
+      </div>
+      <div className="movieWrapper">
+          <h2>{movieDescriptionTitle}</h2>
+          <p>{movieDescriptionText}</p>
+      </div>
+    </div>
   );
 };
 
