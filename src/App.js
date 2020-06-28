@@ -138,7 +138,7 @@ class App extends Component {
         <Ratings bookScore={4.59} movieScore={3.25} />
         <Description />
       </div>
-  <Fragment />
+  </Fragment>
     );
   }
 }
