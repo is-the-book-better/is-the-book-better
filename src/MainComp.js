@@ -6,8 +6,8 @@ const MainComp = () => {
     let yupOrNope = `Yup.`;
     let winner = `Enders Game`;
 
-    let book = <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1408303130l/375802.jpg" />
-    let movie= <img src="https://m.media-amazon.com/images/M/MV5BMjAzMzI5OTgzMl5BMl5BanBnXkFtZTgwMTU5MTAwMDE@._V1_SY1000_CR0,0,674,1000_AL_.jpg" />;
+    let book = <img alt="book cover" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1408303130l/375802.jpg" />
+    let movie= <img alt="movie poster" src="https://m.media-amazon.com/images/M/MV5BMjAzMzI5OTgzMl5BMl5BanBnXkFtZTgwMTU5MTAwMDE@._V1_SY1000_CR0,0,674,1000_AL_.jpg" />;
 
     
     let authorsName = `Orson Scott Card`;
