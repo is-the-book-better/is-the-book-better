@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import MainComp from "./MainComp"
 import Ratings from "./Ratings";
+import Description from "./Description"
 import axios from "axios";
 
 class App extends Component {
@@ -106,6 +108,9 @@ class App extends Component {
 
 
     return (
+      
+      <Fragment>
+
       <header>
         <h1>Is the Book Better?</h1>
         <p>Enter the item below to find out</p>
@@ -119,6 +124,21 @@ class App extends Component {
 
         <Ratings bookScore={4.59} movieScore={3.25} movie={popMovie} books={popBooks} />
       </header>
+    <div>
+        {this.state.books.map((book) => {
+          let bestBook = book.best_book;
+          return (
+            <>
+              <h1>{bestBook.title}</h1>
+              <p>{bestBook.author.name}</p>
+            </>
+          );
+        })}
+        <MainComp />
+        <Ratings bookScore={4.59} movieScore={3.25} />
+        <Description />
+      </div>
+  </Fragment>
     );
   }
 }

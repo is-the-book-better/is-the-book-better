@@ -1,0 +1,43 @@
+// $darkBlue: #261870;
+// $lightBlue: #5da9c2;
+// $green: #ace8cd;
+
+// $sans-serif: "Montserrat", sans-serif;
+// $serif: "Maitree", serif;
+
+
+
+.descriptionWrapper {
+    width: 100%;
+    font-family: $serif;
+    line-height: 28px;
+    padding: 10px;
+
+    div {
+        // border: 1px solid red;
+        margin: 20px 0;
+    }
+
+    h2 {
+        // border: 1px solid blue;
+        text-align: center;
+        color: $darkBlue;
+        font-size: 2rem;
+        margin: 5px;
+    }
+
+    p {
+        padding: 5px 15px;
+        font-size: 1.1rem;
+    }
+
+}
+
+@media (min-width: 790px) {
+    .descriptionWrapper {
+        display: flex;
+    }
+
+
+}
+
