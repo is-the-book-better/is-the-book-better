@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import MainComp from "./MainComp"
 import Ratings from "./Ratings";
 import Description from "./Description"
@@ -108,6 +108,8 @@ class App extends Component {
 
 
     return (
+      
+      <Fragment>
 
       <header>
         <h1>Is the Book Better?</h1>
@@ -136,7 +138,7 @@ class App extends Component {
         <Ratings bookScore={4.59} movieScore={3.25} />
         <Description />
       </div>
-
+  <Fragment />
     );
   }
 }
