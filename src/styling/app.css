@@ -338,7 +338,6 @@ textarea {
   overflow: hidden;
 }
 
-
 .mainCompWrapper {
   font-family: "Maitree", serif;
   text-align: center;
@@ -390,7 +389,6 @@ textarea {
 .ratings-wrapper {
   width: 90%;
   margin: 0 auto;
-
 }
 
 .ratings {
@@ -502,6 +500,74 @@ textarea {
     display: -ms-flexbox;
     display: flex;
   }
+}
+
+header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #261870;
+  text-align: center;
+  height: 100vh;
+}
+
+header h1 {
+  font-family: "Maitree", serif;
+  font-size: 3rem;
+  padding: 20px;
+}
+
+header p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5rem;
+  padding: 20px;
+}
+
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form input {
+  width: 70vw;
+  padding: 10px;
+  margin: 20px 0;
+  background: #ace8cd;
+  border-style: none;
+  border-radius: 10px;
+}
+
+form button {
+  width: 100px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #ace8cd;
+  border-style: none;
+}
+
+form button:hover, form button:focus {
+  border: 2px solid #261870;
 }
 
 /*

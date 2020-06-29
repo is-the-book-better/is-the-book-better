@@ -10,7 +10,13 @@ class App extends Component {
     this.state = {
       query: '',
       books: [],
+      bookTitle: '',
+      bookRating: '',
+      bookDescription: '',
       movies: [],
+      movieTitle: '',
+      movieRating: '',
+      movieDescription: '',
     };
   }
 
@@ -37,7 +43,10 @@ class App extends Component {
         paramType: "json",
         params: {
           api_key: "4851783a531664a8fc58abf098309ada",
+          language: 'en-US',
           query: this.state.query,
+          page: '1',
+          include_adult: 'false',
         },
       });
 
@@ -102,43 +111,29 @@ class App extends Component {
   }
 
   render() {
-    const { movies, books } = this.state;
-    const popMovie = movies[0];
-    const popBooks = books[0];
-
+    // const { movies, books } = this.state;
+    // const popMovie = movies[0];
+    // const bestBook = books[0];
+    // const bestBook = popBook.best_book;
 
     return (
-      
+
       <Fragment>
 
-      <header>
-        <h1>Is the Book Better?</h1>
-        <p>Enter the item below to find out</p>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="searchBar">Search Bar</label>
-          <input type="search" name="query" id="searchBar" onChange={this.handleChange} value={this.state.query} placeholder="Enter here..." />
-          <button type="submit" onClick={this.handleSubmit}>Submit</button>
-        </form>
-        {console.log(popMovie)}
-        {console.log(popBooks)}
+        <header>
+          <h1>Is the Book Better?</h1>
+          <p>Enter the item below to find out</p>
+          <form onSubmit={this.handleSubmit}>
+            <label className="visuallyHidden" htmlFor="searchBar">Search Bar</label>
+            <input type="search" name="query" id="searchBar" onChange={this.handleChange} value={this.state.query} placeholder="Enter here..." />
+            <button type="submit" onClick={this.handleSubmit}>Submit</button>
+          </form>
+        </header>
 
-        <Ratings bookScore={4.59} movieScore={3.25} movie={popMovie} books={popBooks} />
-      </header>
-    <div>
-        {this.state.books.map((book) => {
-          let bestBook = book.best_book;
-          return (
-            <>
-              <h1>{bestBook.title}</h1>
-              <p>{bestBook.author.name}</p>
-            </>
-          );
-        })}
         <MainComp />
         <Ratings bookScore={4.59} movieScore={3.25} />
         <Description />
-      </div>
-  </Fragment>
+      </Fragment>
     );
   }
 }
