@@ -111,9 +111,9 @@ class App extends Component {
   }
 
   render() {
-    const { movies, books } = this.state;
-    const popMovie = movies[0];
-    const bestBook = books[0];
+    // const { movies, books } = this.state;
+    // const popMovie = movies[0];
+    // const bestBook = books[0];
     // const bestBook = popBook.best_book;
 
     return (
