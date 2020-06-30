@@ -343,7 +343,8 @@ textarea {
   text-align: center;
 }
 
-.mainCompWrapper h2, .mainCompWrapper h3 {
+.mainCompWrapper h2,
+.mainCompWrapper h3 {
   color: #261870;
 }
 
@@ -352,9 +353,37 @@ textarea {
   padding: 20px;
 }
 
+@media (min-width: 768px) {
+  .mainCompWrapper h2 {
+    font-size: 4rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .mainCompWrapper h2 {
+    font-size: 5.5rem;
+    padding-bottom: 4rem;
+  }
+}
+
 .mainCompWrapper h3 {
   font-size: 2rem;
   padding: 20px;
+}
+
+@media (min-width: 768px) {
+  .mainCompWrapper h3 {
+    font-size: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .mainCompWrapper h3 {
+    font-size: 5rem;
+    padding-bottom: 4rem;
+  }
 }
 
 .mainCompWrapper .imagesDiv {
@@ -366,14 +395,31 @@ textarea {
           justify-content: space-evenly;
 }
 
-.mainCompWrapper .bookDiv, .mainCompWrapper .movieDiv {
+.mainCompWrapper .bookDiv,
+.mainCompWrapper .movieDiv {
   background-color: #ace8cd;
   width: 40%;
 }
 
-.mainCompWrapper .bookDiv img, .mainCompWrapper .movieDiv img {
-  width: 90%;
+@media (min-width: 768px) {
+  .mainCompWrapper .bookDiv,
+  .mainCompWrapper .movieDiv {
+    width: 30%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .mainCompWrapper .bookDiv,
+  .mainCompWrapper .movieDiv {
+    width: 25%;
+  }
+}
+
+.mainCompWrapper .bookDiv img,
+.mainCompWrapper .movieDiv img {
+  max-width: 100%;
   height: 100%;
+  padding: 1rem;
 }
 
 .mainCompWrapper h4 {
@@ -381,9 +427,37 @@ textarea {
   padding: 20px;
 }
 
+@media (min-width: 768px) {
+  .mainCompWrapper h4 {
+    font-size: 2.5rem;
+    padding-top: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .mainCompWrapper h4 {
+    font-size: 4rem;
+  }
+}
+
 .mainCompWrapper h5 {
   font-size: 2.4rem;
   padding: 20px;
+}
+
+@media (min-width: 768px) {
+  .mainCompWrapper h5 {
+    font-size: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .mainCompWrapper h5 {
+    font-size: 4.5rem;
+    padding-bottom: 3rem;
+  }
 }
 
 .ratings-wrapper {
@@ -404,9 +478,33 @@ textarea {
   text-align: center;
 }
 
+@media (min-width: 768px) {
+  .ratings h3 {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ratings h3 {
+    font-size: 4rem;
+  }
+}
+
 .ratings i {
   color: #5da9c2;
   font-size: 1.125rem;
+}
+
+@media (min-width: 768px) {
+  .ratings i {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ratings i {
+    font-size: 3rem;
+  }
 }
 
 .apiRatings {
@@ -472,10 +570,10 @@ textarea {
 }
 
 .descriptionWrapper {
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
   font-family: "Maitree", serif;
   line-height: 28px;
-  padding: 10px;
 }
 
 .descriptionWrapper div {
@@ -489,9 +587,37 @@ textarea {
   margin: 5px;
 }
 
+@media (min-width: 768px) {
+  .descriptionWrapper h2 {
+    font-size: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .descriptionWrapper h2 {
+    font-size: 4rem;
+    padding-bottom: 3rem;
+  }
+}
+
 .descriptionWrapper p {
   padding: 5px 15px;
   font-size: 1.1rem;
+}
+
+@media (min-width: 768px) {
+  .descriptionWrapper p {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .descriptionWrapper p {
+    font-size: 1.5rem;
+    line-height: 125%;
+  }
 }
 
 @media (min-width: 790px) {
@@ -527,10 +653,34 @@ header h1 {
   padding: 20px;
 }
 
+@media (min-width: 768px) {
+  header h1 {
+    font-size: 4.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  header h1 {
+    font-size: 6rem;
+  }
+}
+
 header p {
   font-family: "Montserrat", sans-serif;
   font-size: 1.5rem;
   padding: 20px;
+}
+
+@media (min-width: 768px) {
+  header p {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  header p {
+    font-size: 2.5rem;
+  }
 }
 
 form {
@@ -558,6 +708,22 @@ form input {
   border-radius: 10px;
 }
 
+@media (min-width: 768px) {
+  form input {
+    padding: 1rem;
+    font-size: 1.5rem;
+    width: 50vw;
+  }
+}
+
+@media (min-width: 1280px) {
+  form input {
+    padding: 1.25rem;
+    font-size: 1.75rem;
+    width: 40vw;
+  }
+}
+
 form button {
   width: 100px;
   padding: 10px;
@@ -568,6 +734,22 @@ form button {
 
 form button:hover, form button:focus {
   border: 2px solid #261870;
+}
+
+@media (min-width: 768px) {
+  form button {
+    width: 8rem;
+    padding: 1rem;
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  form button {
+    width: 10rem;
+    padding: 1.5rem;
+    font-size: 1.5rem;
+  }
 }
 
 /*

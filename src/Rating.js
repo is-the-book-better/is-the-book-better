@@ -14,6 +14,7 @@ const Rating = ({ score, medium }) => {
 
   let stars = [];
 
+  // Fill array for respective stars depending on whether it is a quotient, remainder or neither
   for (let i = 0; i < 5; i++) {
     if (i < quotient) {
       stars.push(fullStar);
@@ -24,6 +25,7 @@ const Rating = ({ score, medium }) => {
     }
   }
 
+  // Render 5 icons as create in the array
   return (
     <div className="rating">
       <h3>{score}</h3>

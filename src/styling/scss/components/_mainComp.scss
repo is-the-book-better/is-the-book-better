@@ -6,43 +6,96 @@
 // $serif: "Maitree", serif;
 
 .mainCompWrapper {
-    font-family: $serif;
-    text-align: center;
-    
-    h2, h3 {
-        color: $darkBlue;
+  font-family: $serif;
+  text-align: center;
+
+  h2,
+  h3 {
+    color: $darkBlue;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    padding: 20px;
+    @include responsiveMedia(iPad) {
+      font-size: 4rem;
+      padding-bottom: 3rem;
     }
-    
-    h2 {
-        font-size: 2.5rem;
-        padding: 20px;
+
+    @include responsiveMedia(laptop) {
+      font-size: 5.5rem;
+      padding-bottom: 4rem;
     }
-    
-    h3 {
-        font-size: 2rem;
-        padding: 20px;
+  }
+
+  h3 {
+    font-size: 2rem;
+    padding: 20px;
+    @include responsiveMedia(iPad) {
+      font-size: 3rem;
+      padding-bottom: 3rem;
     }
-    
-    .imagesDiv {
-        display: flex;
-        justify-content: space-evenly;
+
+    @include responsiveMedia(laptop) {
+      font-size: 5rem;
+      padding-bottom: 4rem;
     }
-    
-    .bookDiv, .movieDiv {
-        
-        background-color: $green;
-        width: 40%;
-        img {
-            width: 90%;
-            height: 100%;
-        }
+  }
+
+  .imagesDiv {
+    display: flex;
+    justify-content: space-evenly;
+    @include responsiveMedia(iPad) {
     }
-    h4 {
-        font-size: 2rem;
-        padding: 20px;
+
+    @include responsiveMedia(laptop) {
     }
-    h5 {
-        font-size: 2.4rem;
-        padding: 20px;
+  }
+
+  .bookDiv,
+  .movieDiv {
+    background-color: $green;
+    width: 40%;
+
+    @include responsiveMedia(iPad) {
+      width: 30%;
     }
+
+    @include responsiveMedia(laptop) {
+      width: 25%;
+    }
+
+    img {
+      max-width: 100%;
+      height: 100%;
+      padding: 1rem;
+    }
+  }
+  h4 {
+    font-size: 2rem;
+    padding: 20px;
+    @include responsiveMedia(iPad) {
+      font-size: 2.5rem;
+      padding-top: 3rem;
+    }
+
+    @include responsiveMedia(laptop) {
+      font-size: 4rem;
+    }
+  }
+  h5 {
+    font-size: 2.4rem;
+    padding: 20px;
+
+    @include responsiveMedia(iPad) {
+      font-size: 3rem;
+      padding-top: 2rem;
+      padding-bottom: 1rem;
+    }
+
+    @include responsiveMedia(laptop) {
+      font-size: 4.5rem;
+      padding-bottom: 3rem;
+    }
+  }
 }
