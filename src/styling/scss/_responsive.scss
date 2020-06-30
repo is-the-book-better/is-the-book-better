@@ -1,0 +1,17 @@
+@mixin responsiveMedia($breakpoint) {
+  @if $breakpoint == iPad {
+    @media (min-width: 768px) {
+      @content;
+    }
+  }
+  @if $breakpoint == smallLaptop {
+    @media (min-width: 1000px) {
+      @content;
+    }
+  }
+  @if $breakpoint == laptop {
+    @media (min-width: 1280px) {
+      @content;
+    }
+  }
+}
