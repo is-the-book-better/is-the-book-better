@@ -9,12 +9,16 @@ class App extends Component {
     super();
     this.state = {
       query: '',
+      isBookBetter: true,
+      bookAuthor: '',
       books: [],
       bookTitle: '',
+      bookImageUrl: '',
       bookRating: '',
       bookDescription: '',
       movies: [],
       movieTitle: '',
+      movieImageUrl: '',
       movieRating: '',
       movieDescription: '',
     };
@@ -24,18 +28,30 @@ class App extends Component {
     this.searchResults();
   }
 
+  // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY 
   searchResults = async () => {
     console.log(this.state.query)
     try {
-      let res = await axios({
+      let googleBooks = await axios({
         method: "GET",
-        url:
-          "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
+        url: "https://www.googleapis.com/books/v1/volumes?",
+        paramType: "json",
         params: {
-          key: "odsRW5CclbTNlqFbZCaC4A",
-          q: this.state.query,
-        },
-      });
+          // key: "AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY",
+          q: `intitle:${this.state.query}`,
+          orderBy: 'relevance'
+        }
+      })
+      // let res = await axios({
+      //   method: "GET",
+      //   url:
+      //     "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/title.xml?",
+      //   // "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
+      //   params: {
+      //     key: "odsRW5CclbTNlqFbZCaC4A",
+      //     title: this.state.query,
+      //   },
+      // });
 
       let moviesApi = await axios({
         method: "GET",
@@ -50,50 +66,77 @@ class App extends Component {
         },
       });
 
-      const books = this.parseXMLResponse(res.data);
+      // const books = 
+      const books = googleBooks.data.items;
       const movies = moviesApi.data.results;
-      console.log(books)
+
       this.setState({
         books,
         movies
       });
+      this.getBookDetails();
+      this.getMovieDetails();
     } catch (error) {
       console.log(error);
     }
   };
 
-  // parse string xml received from goodreads api
-  parseXMLResponse = (response) => {
-    const parser = new DOMParser();
-    const XMLResponse = parser.parseFromString(response, "application/xml");
-    const parseError = XMLResponse.getElementsByTagName("parsererror");
+  getBookDetails = () => {
 
-    if (parseError.length) {
+    if (this.state.books[0]) {
+      const popBook = { ...this.state.books[0].volumeInfo };
       this.setState({
-        error: "There was an error fetching results.",
-        fetchingData: false,
-      });
-    } else {
-      const XMLresults = new Array(...XMLResponse.getElementsByTagName("work"));
-      const searchResults = XMLresults.map((result) => this.XMLToJson(result));
-      return searchResults;
+        bookTitle: popBook.title,
+        bookAuthor: popBook.authors[0],
+        bookImageUrl: popBook.imageLinks.thumbnail,
+        bookRating: popBook.averageRating,
+        bookDescription: popBook.description,
+      })
     }
-  };
-  // Function to convert simple XML document into JSON.
-  // Loops through each child and saves it as key, value pair
-  // if there are sub-children, call the same function recursively on its children.
-  XMLToJson = (XML) => {
-    const allNodes = new Array(...XML.children);
-    const jsonResult = {};
-    allNodes.forEach((node) => {
-      if (node.children.length) {
-        jsonResult[node.nodeName] = this.XMLToJson(node);
-      } else {
-        jsonResult[node.nodeName] = node.innerHTML;
-      }
-    });
-    return jsonResult;
-  };
+  }
+
+  getMovieDetails = () => {
+    const popMovie = { ...this.state.movies[0] };
+    this.setState({
+      movieTitle: popMovie.title,
+      movieImageUrl: `http://image.tmdb.org/t/p/w500/${popMovie.poster_path}`,
+      movieRating: popMovie.vote_average,
+      movieDescription: popMovie.overview,
+    })
+  }
+
+  // parse string xml received from goodreads api
+  // parseXMLResponse = (response) => {
+  //   const parser = new DOMParser();
+  //   const XMLResponse = parser.parseFromString(response, "application/xml");
+  //   const parseError = XMLResponse.getElementsByTagName("parsererror");
+
+  //   if (parseError.length) {
+  //     this.setState({
+  //       error: "There was an error fetching results.",
+  //       fetchingData: false,
+  //     });
+  //   } else {
+  //     const XMLresults = new Array(...XMLResponse.getElementsByTagName("work"));
+  //     const searchResults = XMLresults.map((result) => this.XMLToJson(result));
+  //     return searchResults;
+  //   }
+  // };
+  // // Function to convert simple XML document into JSON.
+  // // Loops through each child and saves it as key, value pair
+  // // if there are sub-children, call the same function recursively on its children.
+  // XMLToJson = (XML) => {
+  //   const allNodes = new Array(...XML.children);
+  //   const jsonResult = {};
+  //   allNodes.forEach((node) => {
+  //     if (node.children.length) {
+  //       jsonResult[node.nodeName] = this.XMLToJson(node);
+  //     } else {
+  //       jsonResult[node.nodeName] = node.innerHTML;
+  //     }
+  //   });
+  //   return jsonResult;
+  // };
 
   handleChange = (event) => {
     this.setState({
@@ -111,9 +154,9 @@ class App extends Component {
   }
 
   render() {
-    // const { movies, books } = this.state;
-    // const popMovie = movies[0];
-    // const bestBook = books[0];
+    const { movies, books } = this.state;
+    const popMovie = movies[0];
+    const popBook = books[0];
     // const bestBook = popBook.best_book;
 
     return (
@@ -129,10 +172,29 @@ class App extends Component {
             <button type="submit" onClick={this.handleSubmit}>Submit</button>
           </form>
         </header>
-
-        <MainComp />
-        <Ratings bookScore={4.59} movieScore={3.25} />
-        <Description />
+        {console.log(popMovie)}
+        {console.log(popBook)}
+        {
+          popBook && popMovie ?
+            <>
+              <MainComp
+                isBookBetter={this.state.isBookBetter}
+                title={this.state.bookTitle}
+                movieImageUrl={this.state.movieImageUrl}
+                bookImageUrl={this.state.bookImageUrl}
+                bookAuthor={this.state.bookAuthor}
+              />
+              <Ratings
+                bookScore={this.state.bookRating}
+                movieScore={this.state.movieRating}
+              />
+              <Description
+                movieDescription={this.state.movieDescription}
+                bookDescription={this.state.bookDescription}
+              />
+            </> :
+            <p>Loading....</p>
+        }
       </Fragment>
     );
   }
