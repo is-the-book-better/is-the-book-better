@@ -183,12 +183,14 @@ class App extends Component {
                 movieImageUrl={this.state.movieImageUrl}
                 bookImageUrl={this.state.bookImageUrl}
                 bookAuthor={this.state.bookAuthor}
-              />
+                />
               <Ratings
                 bookScore={this.state.bookRating}
                 movieScore={this.state.movieRating}
-              />
+                />
               <Description
+                bookTitle={this.state.bookTitle}
+                movieTitle={this.state.movieTitle}
                 movieDescription={this.state.movieDescription}
                 bookDescription={this.state.bookDescription}
               />
