@@ -478,9 +478,33 @@ textarea {
   text-align: center;
 }
 
+@media (min-width: 768px) {
+  .ratings h3 {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ratings h3 {
+    font-size: 4rem;
+  }
+}
+
 .ratings i {
   color: #5da9c2;
   font-size: 1.125rem;
+}
+
+@media (min-width: 768px) {
+  .ratings i {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ratings i {
+    font-size: 3rem;
+  }
 }
 
 .apiRatings {

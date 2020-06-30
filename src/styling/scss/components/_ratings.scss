@@ -12,11 +12,25 @@
     margin-bottom: 0.5rem;
     font-family: $serif;
     text-align: center;
+    @include responsiveMedia(iPad) {
+      font-size: 3rem;
+    }
+
+    @include responsiveMedia(laptop) {
+      font-size: 4rem;
+    }
   }
 
   i {
     color: $lightBlue;
     font-size: 1.125rem;
+    @include responsiveMedia(iPad) {
+      font-size: 2rem;
+    }
+
+    @include responsiveMedia(laptop) {
+      font-size: 3rem;
+    }
   }
 }
 
