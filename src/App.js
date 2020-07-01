@@ -3,41 +3,38 @@ import MainComp from "./MainComp";
 import Ratings from "./Ratings";
 import Description from "./Description";
 import axios from "axios";
-import parser from 'fast-xml-parser';
-// import he from 'he'; 
+import parser from "fast-xml-parser";
+import firebase from "./firebase";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      query: '',
+      query: "",
       isBookBetter: true,
-      bookAuthor: '',
+      bookAuthor: "",
       book: {},
       books: [],
-      bookTitle: '',
-      bookImageUrl: '',
-      bookRating: '',
-      bookDescription: '',
+      bookTitle: "",
+      bookImageUrl: "",
+      bookRating: "",
+      bookDescription: "",
       movies: [],
       movie: {},
-      movieTitle: '', 
-      movieImageUrl: '',
-      movieRating: '',
-      movieDescription: '',
+      movieTitle: "",
+      movieImageUrl: "",
+      movieRating: "",
+      movieDescription: "",
     };
   }
 
-  componentDidMount (){
+  componentDidMount() {
     this.searchResults();
-  
-    
-   
   }
 
-  // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY 
+  // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
   searchResults = async () => {
-    console.log(this.state.query)
+    console.log(this.state.query);
     try {
       // let googleBooks = await axios({
       //   method: "GET",
@@ -52,23 +49,23 @@ class App extends Component {
       let res = await axios({
         method: "GET",
         url:
-        "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
+          "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
         params: {
           key: "odsRW5CclbTNlqFbZCaC4A",
           q: this.state.query,
         },
       });
-     
+
       const books = this.parseXMLResponse(res.data);
-      
+
       const bookId = books[0].best_book.id;
-      const bookDetail = await axios ({
+      const bookDetail = await axios({
         method: "GET",
         url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/show/${bookId}.xml?`,
         params: {
-          key: "odsRW5CclbTNlqFbZCaC4A"
-        }
-      })
+          key: "odsRW5CclbTNlqFbZCaC4A",
+        },
+      });
 
       let bookObj = parser.parse(bookDetail.data);
       let book = bookObj.GoodreadsResponse.book;
@@ -79,10 +76,10 @@ class App extends Component {
         paramType: "json",
         params: {
           api_key: "4851783a531664a8fc58abf098309ada",
-          language: 'en-US',
+          language: "en-US",
           query: this.state.query,
-          page: '1',
-          include_adult: 'false',
+          page: "1",
+          include_adult: "false",
         },
       });
 
@@ -94,7 +91,7 @@ class App extends Component {
         books,
         book,
         movies,
-        movie
+        movie,
       });
       this.getBookDetails();
       this.getMovieDetails();
@@ -104,7 +101,6 @@ class App extends Component {
   };
 
   getBookDetails = () => {
-
     if (this.state.book) {
       const popBook = { ...this.state.book };
       this.setState({
@@ -113,9 +109,9 @@ class App extends Component {
         bookImageUrl: popBook.image_url,
         bookRating: popBook.average_rating,
         bookDescription: popBook.description,
-      })
+      });
     }
-  }
+  };
 
   getMovieDetails = () => {
     const popMovie = { ...this.state.movies[0] };
@@ -124,8 +120,8 @@ class App extends Component {
       movieImageUrl: `http://image.tmdb.org/t/p/w500/${popMovie.poster_path}`,
       movieRating: popMovie.vote_average,
       movieDescription: popMovie.overview,
-    })
-  }
+    });
+  };
 
   // parse string xml received from goodreads api
   parseXMLResponse = (response) => {
@@ -162,10 +158,10 @@ class App extends Component {
 
   handleChange = (event) => {
     this.setState({
-      query: event.target.value
-    })
+      query: event.target.value,
+    });
     // this.searchResults();
-  }
+  };
 
   handleSubmit = (event) => {
     this.searchResults();
@@ -173,7 +169,7 @@ class App extends Component {
     // this.setState({
     //   query: ''
     // })
-  }
+  };
 
   render() {
     const { movies, books } = this.state;
@@ -182,43 +178,52 @@ class App extends Component {
     // const bestBook = popBook.best_book;
 
     return (
-
       <Fragment>
-
         <header>
           <h1>Is the Book Better?</h1>
           <p>Enter the item below to find out</p>
           <form onSubmit={this.handleSubmit}>
-            <label className="visuallyHidden" htmlFor="searchBar">Search Bar</label>
-            <input type="search" name="query" id="searchBar" onChange={this.handleChange} value={this.state.query} placeholder="Enter here..." />
-            <button type="submit" onClick={this.handleSubmit}>Submit</button>
+            <label className="visuallyHidden" htmlFor="searchBar">
+              Search Bar
+            </label>
+            <input
+              type="search"
+              name="query"
+              id="searchBar"
+              onChange={this.handleChange}
+              value={this.state.query}
+              placeholder="Enter here..."
+            />
+            <button type="submit" onClick={this.handleSubmit}>
+              Submit
+            </button>
           </form>
         </header>
         {/* {console.log(popMovie)} */}
         {/* {console.log(popBook)} */}
-        {
-          popBook && popMovie ?
-            <>
-              <MainComp
-                isBookBetter={this.state.isBookBetter}
-                title={this.state.bookTitle}
-                movieImageUrl={this.state.movieImageUrl}
-                bookImageUrl={this.state.bookImageUrl}
-                bookAuthor={this.state.bookAuthor}
-                />
-              <Ratings
-                bookScore={this.state.bookRating}
-                movieScore={this.state.movieRating}
-                />
-              <Description
-                bookTitle={this.state.bookTitle}
-                movieTitle={this.state.movieTitle}
-                movieDescription={this.state.movieDescription}
-                bookDescription={this.state.bookDescription}
-              />
-            </> :
-            <p>Loading....</p>
-        }
+        {popBook && popMovie ? (
+          <>
+            <MainComp
+              isBookBetter={this.state.isBookBetter}
+              title={this.state.bookTitle}
+              movieImageUrl={this.state.movieImageUrl}
+              bookImageUrl={this.state.bookImageUrl}
+              bookAuthor={this.state.bookAuthor}
+            />
+            <Ratings
+              bookScore={this.state.bookRating}
+              movieScore={this.state.movieRating}
+            />
+            <Description
+              bookTitle={this.state.bookTitle}
+              movieTitle={this.state.movieTitle}
+              movieDescription={this.state.movieDescription}
+              bookDescription={this.state.bookDescription}
+            />
+          </>
+        ) : (
+          <p>Loading....</p>
+        )}
       </Fragment>
     );
   }
