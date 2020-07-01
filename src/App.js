@@ -10,6 +10,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      recent: [],
       query: "",
       isBookBetter: true,
       bookAuthor: "",
@@ -30,6 +31,15 @@ class App extends Component {
 
   componentDidMount() {
     this.searchResults();
+
+    const dbRef = firebase.database().ref();
+    dbRef.on("value", (response) => {
+      const data = response.val();
+      console.log(data.recent);
+      this.setState({
+        recent: data.recent,
+      });
+    });
   }
 
   // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
@@ -95,6 +105,12 @@ class App extends Component {
       });
       this.getBookDetails();
       this.getMovieDetails();
+
+      // const dbRef = firebase.database().ref();
+      // let recent = this.state.recent;
+      // recent.push(this.state.query);
+      // console.log(recent);
+      // dbRef.push(submissionApp);
     } catch (error) {
       console.log(error);
     }
