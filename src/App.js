@@ -34,6 +34,7 @@ class App extends Component {
     this.searchResults();
   }
 
+  // Retrieve recent searches
   getRecentSearches() {
     const dbRef = firebase.database().ref();
     dbRef.on("value", (response) => {
@@ -45,6 +46,7 @@ class App extends Component {
     });
   }
 
+  // Update recent searches
   updateRecentSearches() {
     const dbRef = firebase.database().ref("recent");
     let recent = this.state.recent;
@@ -119,7 +121,13 @@ class App extends Component {
       this.getBookDetails();
       this.getMovieDetails();
 
-      this.updateRecentSearches();
+      // Update recent searches if search is successful
+      if (
+        this.state.movieTitle !== undefined &&
+        this.state.bookTitle !== undefined
+      ) {
+        this.updateRecentSearches();
+      }
     } catch (error) {
       console.log(error);
     }
