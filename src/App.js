@@ -30,19 +30,30 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.getRecentSearches();
     this.searchResults();
   }
 
-  // getRecentSearches() {
-  //   const dbRef = firebase.database().ref();
-  //   dbRef.on("value", (response) => {
-  //     const data = response.val();
-  //     console.log(data.recent);
-  //     this.setState({
-  //       recent: data.recent,
-  //     });
-  //   });
-  // }
+  getRecentSearches() {
+    const dbRef = firebase.database().ref();
+    dbRef.on("value", (response) => {
+      const data = response.val();
+      console.log(data.recent);
+      this.setState({
+        recent: data.recent,
+      });
+    });
+  }
+
+  updateRecentSearches() {
+    const dbRef = firebase.database().ref("recent");
+    let recent = this.state.recent;
+    if (recent.length > 9) {
+      recent.pop();
+    }
+    recent.unshift(this.state.query);
+    dbRef.set(recent);
+  }
 
   // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
   searchResults = async () => {
@@ -108,13 +119,7 @@ class App extends Component {
       this.getBookDetails();
       this.getMovieDetails();
 
-      const dbRef = firebase.database().ref("recent");
-      let recent = this.state.recent;
-      if (recent.length > 9) {
-        recent.pop();
-      }
-      recent.unshift(this.state.query);
-      dbRef.set(recent);
+      this.updateRecentSearches();
     } catch (error) {
       console.log(error);
     }
