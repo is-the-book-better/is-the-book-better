@@ -106,11 +106,10 @@ class App extends Component {
       this.getBookDetails();
       this.getMovieDetails();
 
-      // const dbRef = firebase.database().ref();
-      // let recent = this.state.recent;
-      // recent.push(this.state.query);
-      // console.log(recent);
-      // dbRef.push(submissionApp);
+      const dbRef = firebase.database().ref("recent");
+      let recent = this.state.recent;
+      recent.push(this.state.query);
+      dbRef.update(recent);
     } catch (error) {
       console.log(error);
     }
