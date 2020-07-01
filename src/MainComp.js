@@ -1,31 +1,24 @@
 import React from 'react';
 
 
-const MainComp = () => {
+const MainComp = ({isBookBetter, title, movieImageUrl, bookImageUrl, bookAuthor}) => {
     
-    let yupOrNope = `Yup.`;
-    let winner = `Enders Game`;
-
-    let book = <img alt="book cover" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1408303130l/375802.jpg" />
-    let movie= <img alt="movie poster" src="https://m.media-amazon.com/images/M/MV5BMjAzMzI5OTgzMl5BMl5BanBnXkFtZTgwMTU5MTAwMDE@._V1_SY1000_CR0,0,674,1000_AL_.jpg" />;
-
-    
-    let authorsName = `Orson Scott Card`;
 
   return (
+
     <div className="mainCompWrapper">
-        <h2>{yupOrNope}</h2>
-        <h3>{winner}</h3>
+    {isBookBetter ? <h2>Yup.</h2> : <h2>Nope.</h2> }
+        <h3>{title}</h3>
         <div className="imagesDiv">
             <div className="bookDiv">
-                {book}
+                <img src={bookImageUrl} alt={`Book cover art for ${title}`}></img>
             </div>
             <div className="movieDiv">
-                {movie}
+                <img src={movieImageUrl} alt={`Movie cover art for ${title}`}></img>    
             </div>
         </div>
         <h4>Written By</h4>
-        <h5>{authorsName}</h5>
+        <h5>{bookAuthor}</h5>
     </div>
   );
 };
