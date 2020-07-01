@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from "react";
-import MainComp from "./MainComp"
+import MainComp from "./MainComp";
 import Ratings from "./Ratings";
-import Description from "./Description"
+import Description from "./Description";
 import axios from "axios";
+import parser from 'fast-xml-parser';
+// import he from 'he'; 
 
 class App extends Component {
   constructor() {
@@ -11,48 +13,66 @@ class App extends Component {
       query: '',
       isBookBetter: true,
       bookAuthor: '',
+      book: {},
       books: [],
       bookTitle: '',
       bookImageUrl: '',
       bookRating: '',
       bookDescription: '',
       movies: [],
-      movieTitle: '',
+      movie: {},
+      movieTitle: '', 
       movieImageUrl: '',
       movieRating: '',
       movieDescription: '',
     };
   }
 
-  componentDidMount() {
+  componentDidMount (){
     this.searchResults();
+  
+    
+   
   }
 
   // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY 
   searchResults = async () => {
     console.log(this.state.query)
     try {
-      let googleBooks = await axios({
+      // let googleBooks = await axios({
+      //   method: "GET",
+      //   url: "https://www.googleapis.com/books/v1/volumes?",
+      //   paramType: "json",
+      //   params: {
+      //     // key: "AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY",
+      //     q: `intitle:${this.state.query}`,
+      //     // orderBy: 'relevance'
+      //   }
+      // })
+      let res = await axios({
         method: "GET",
-        url: "https://www.googleapis.com/books/v1/volumes?",
-        paramType: "json",
+        url:
+        "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
         params: {
-          // key: "AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY",
-          q: `intitle:${this.state.query}`,
-          orderBy: 'relevance'
+          key: "odsRW5CclbTNlqFbZCaC4A",
+          q: this.state.query,
+        },
+      });
+     
+      const books = this.parseXMLResponse(res.data);
+      
+      const bookId = books[0].best_book.id;
+      const bookDetail = await axios ({
+        method: "GET",
+        url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/show/${bookId}.xml?`,
+        params: {
+          key: "odsRW5CclbTNlqFbZCaC4A"
         }
       })
-      // let res = await axios({
-      //   method: "GET",
-      //   url:
-      //     "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/title.xml?",
-      //   // "https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?",
-      //   params: {
-      //     key: "odsRW5CclbTNlqFbZCaC4A",
-      //     title: this.state.query,
-      //   },
-      // });
 
+      let bookObj = parser.parse(bookDetail.data);
+      let book = bookObj.GoodreadsResponse.book;
+      console.log(book);
       let moviesApi = await axios({
         method: "GET",
         url: "https://api.themoviedb.org/3/search/movie?",
@@ -66,13 +86,15 @@ class App extends Component {
         },
       });
 
-      // const books = 
-      const books = googleBooks.data.items;
+      // console.log(books);
+      // const books = googleBooks.data.items;
       const movies = moviesApi.data.results;
-
+      const movie = movies[0];
       this.setState({
         books,
-        movies
+        book,
+        movies,
+        movie
       });
       this.getBookDetails();
       this.getMovieDetails();
@@ -83,13 +105,13 @@ class App extends Component {
 
   getBookDetails = () => {
 
-    if (this.state.books[0]) {
-      const popBook = { ...this.state.books[0].volumeInfo };
+    if (this.state.book) {
+      const popBook = { ...this.state.book };
       this.setState({
         bookTitle: popBook.title,
-        bookAuthor: popBook.authors[0],
-        bookImageUrl: popBook.imageLinks.thumbnail,
-        bookRating: popBook.averageRating,
+        bookAuthor: popBook.authors.author.name,
+        bookImageUrl: popBook.image_url,
+        bookRating: popBook.average_rating,
         bookDescription: popBook.description,
       })
     }
@@ -106,51 +128,51 @@ class App extends Component {
   }
 
   // parse string xml received from goodreads api
-  // parseXMLResponse = (response) => {
-  //   const parser = new DOMParser();
-  //   const XMLResponse = parser.parseFromString(response, "application/xml");
-  //   const parseError = XMLResponse.getElementsByTagName("parsererror");
+  parseXMLResponse = (response) => {
+    const parser = new DOMParser();
+    const XMLResponse = parser.parseFromString(response, "application/xml");
+    const parseError = XMLResponse.getElementsByTagName("parsererror");
 
-  //   if (parseError.length) {
-  //     this.setState({
-  //       error: "There was an error fetching results.",
-  //       fetchingData: false,
-  //     });
-  //   } else {
-  //     const XMLresults = new Array(...XMLResponse.getElementsByTagName("work"));
-  //     const searchResults = XMLresults.map((result) => this.XMLToJson(result));
-  //     return searchResults;
-  //   }
-  // };
-  // // Function to convert simple XML document into JSON.
-  // // Loops through each child and saves it as key, value pair
-  // // if there are sub-children, call the same function recursively on its children.
-  // XMLToJson = (XML) => {
-  //   const allNodes = new Array(...XML.children);
-  //   const jsonResult = {};
-  //   allNodes.forEach((node) => {
-  //     if (node.children.length) {
-  //       jsonResult[node.nodeName] = this.XMLToJson(node);
-  //     } else {
-  //       jsonResult[node.nodeName] = node.innerHTML;
-  //     }
-  //   });
-  //   return jsonResult;
-  // };
+    if (parseError.length) {
+      this.setState({
+        error: "There was an error fetching results.",
+        fetchingData: false,
+      });
+    } else {
+      const XMLresults = new Array(...XMLResponse.getElementsByTagName("work"));
+      const searchResults = XMLresults.map((result) => this.XMLToJson(result));
+      return searchResults;
+    }
+  };
+  // Function to convert simple XML document into JSON.
+  // Loops through each child and saves it as key, value pair
+  // if there are sub-children, call the same function recursively on its children.
+  XMLToJson = (XML) => {
+    const allNodes = new Array(...XML.children);
+    const jsonResult = {};
+    allNodes.forEach((node) => {
+      if (node.children.length) {
+        jsonResult[node.nodeName] = this.XMLToJson(node);
+      } else {
+        jsonResult[node.nodeName] = node.innerHTML;
+      }
+    });
+    return jsonResult;
+  };
 
   handleChange = (event) => {
     this.setState({
       query: event.target.value
     })
-    this.searchResults();
+    // this.searchResults();
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
     this.searchResults();
-    this.setState({
-      query: ''
-    })
+    event.preventDefault();
+    // this.setState({
+    //   query: ''
+    // })
   }
 
   render() {
@@ -172,8 +194,8 @@ class App extends Component {
             <button type="submit" onClick={this.handleSubmit}>Submit</button>
           </form>
         </header>
-        {console.log(popMovie)}
-        {console.log(popBook)}
+        {/* {console.log(popMovie)} */}
+        {/* {console.log(popBook)} */}
         {
           popBook && popMovie ?
             <>

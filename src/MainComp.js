@@ -5,15 +5,16 @@ const MainComp = ({isBookBetter, title, movieImageUrl, bookImageUrl, bookAuthor}
     
 
   return (
+
     <div className="mainCompWrapper">
-        <h2>{isBookBetter}</h2>
+    {isBookBetter ? <h2>Yup.</h2> : <h2>Nope.</h2> }
         <h3>{title}</h3>
         <div className="imagesDiv">
             <div className="bookDiv">
-                <img src={bookImageUrl}></img>
+                <img src={bookImageUrl} alt={`Book cover art for ${title}`}></img>
             </div>
             <div className="movieDiv">
-                <img src={movieImageUrl}></img>    
+                <img src={movieImageUrl} alt={`Movie cover art for ${title}`}></img>    
             </div>
         </div>
         <h4>Written By</h4>
