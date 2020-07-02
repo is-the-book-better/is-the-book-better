@@ -338,6 +338,11 @@ textarea {
   overflow: hidden;
 }
 
+.mainWrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .mainCompWrapper {
   font-family: "Maitree", serif;
   text-align: center;
@@ -466,12 +471,13 @@ textarea {
 }
 
 .ratings {
+  color: #5da9c2;
   padding: 1.5rem 0;
   background-color: #ace8cd;
-  color: #261870;
 }
 
 .ratings h3 {
+  color: #261870;
   font-size: 2.25rem;
   margin-bottom: 0.5rem;
   font-family: "Maitree", serif;
@@ -491,7 +497,6 @@ textarea {
 }
 
 .ratings i {
-  color: #5da9c2;
   font-size: 1.125rem;
 }
 
@@ -543,15 +548,15 @@ textarea {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 .vote {
+  color: #5da9c2;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -562,11 +567,23 @@ textarea {
       -ms-flex-align: center;
           align-items: center;
   padding: 1rem;
-  width: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: none;
+  border: none;
 }
 
 .vote i {
   font-size: 4.5rem;
+}
+
+.vote:hover {
+  color: #261870;
+}
+
+.vote:focus {
+  outline: 1px solid #261870;
 }
 
 .descriptionWrapper {
@@ -683,6 +700,13 @@ header p {
   }
 }
 
+h2 {
+  font-size: 1.5rem;
+  font-family: "Montserrat", sans-serif;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
 form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -704,6 +728,7 @@ form input {
   padding: 10px;
   margin: 20px 0;
   background: #ace8cd;
+  color: #261870;
   border-style: none;
   border-radius: 10px;
 }
@@ -718,7 +743,6 @@ form input {
 
 @media (min-width: 1280px) {
   form input {
-    padding: 1.25rem;
     font-size: 1.75rem;
     width: 40vw;
   }
@@ -729,30 +753,61 @@ form button {
   padding: 10px;
   border-radius: 10px;
   background-color: #ace8cd;
+  color: #261870;
   border-style: none;
 }
 
 form button:hover, form button:focus {
-  border: 2px solid #261870;
+  background-color: #261870;
+  color: #ace8cd;
 }
 
 @media (min-width: 768px) {
   form button {
     width: 8rem;
-    padding: 1rem;
+    margin-bottom: 90px;
+    padding: .5rem;
     font-size: 1.25rem;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1280px) {
   form button {
     width: 10rem;
-    padding: 1.5rem;
     font-size: 1.5rem;
   }
 }
 
-/*
-colors: $darkBlue, $lightBlue, $green
-fonts: $sans-serif, $serif
-*/
+.recentContainer {
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.recentSearches {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.recentSearches button {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: #ace8cd;
+  font-family: "Montserrat", sans-serif;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  color: #261870;
+}
+
+.recentSearches button:hover, .recentSearches button:focus {
+  background-color: #261870;
+  color: #ace8cd;
+}

@@ -4,10 +4,12 @@
 }
 
 .ratings {
+  color: $lightBlue;
   padding: 1.5rem 0;
   background-color: $green;
-  color: $darkBlue;
+
   h3 {
+    color: $darkBlue;
     font-size: 2.25rem;
     margin-bottom: 0.5rem;
     font-family: $serif;
@@ -15,19 +17,16 @@
     @include responsiveMedia(iPad) {
       font-size: 3rem;
     }
-
     @include responsiveMedia(laptop) {
       font-size: 4rem;
     }
   }
 
   i {
-    color: $lightBlue;
     font-size: 1.125rem;
     @include responsiveMedia(iPad) {
       font-size: 2rem;
     }
-
     @include responsiveMedia(laptop) {
       font-size: 3rem;
     }
@@ -53,17 +52,26 @@
 
 .voteRatings {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
 }
 
 .vote {
+  color: $lightBlue;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem;
-  width: 100%;
+  width: fit-content;
+  background: none;
+  border: none;
   i {
     font-size: 4.5rem;
+  }
+  &:hover {
+    color: $darkBlue;
+  }
+  &:focus {
+    outline: 1px solid $darkBlue;
   }
 }
