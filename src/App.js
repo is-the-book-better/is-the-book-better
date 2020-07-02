@@ -54,6 +54,7 @@ class App extends Component {
     });
   }
 
+  // Get the votes from Firebase
   getVotes = () => {
     const dbRef = firebase.database().ref();
     dbRef.on("value", (response) => {
@@ -66,6 +67,7 @@ class App extends Component {
     });
   }
 
+  // Load the votes from firebase
   loadVotes = (bookId, movieId) => {
     const dbRefBooks = firebase.database().ref("books");
     const dbRefMovies = firebase.database().ref("movies");
@@ -105,6 +107,7 @@ class App extends Component {
     }
   }
 
+
   doRecentSearch = (e) => {
     e.preventDefault();
     this.setState(
@@ -115,6 +118,7 @@ class App extends Component {
     );
   };
 
+  // Listener for Adding vote 
   upVote = (platform, id) => {
     if (platform === "book") {
       const dbRefBooks = firebase.database().ref("books");
@@ -152,7 +156,7 @@ class App extends Component {
     }
   }
 
-  // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
+  // 
   searchResults = async () => {
     this.setState({
       ...this.state,
@@ -179,7 +183,7 @@ class App extends Component {
         method: "GET",
         url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/show/${bookId}.xml?`,
         params: {
-          key: "odsRW5CclbTNlqFbZCaC4A",
+          key: process.env.REACT_APP_GOODREADS_API_KEY,
         },
       });
 
@@ -190,7 +194,7 @@ class App extends Component {
         url: "https://api.themoviedb.org/3/search/movie?",
         paramType: "json",
         params: {
-          api_key: "4851783a531664a8fc58abf098309ada",
+          api_key: process.env.REACT_APP_MOVIE_API_KEY,
           language: "en-US",
           query: this.state.query,
           page: "1",
@@ -200,7 +204,6 @@ class App extends Component {
 
       const movies = moviesApi.data.results;
       const movie = movies[0];
-
 
       if (movie && book) {
         this.setState({
@@ -219,9 +222,13 @@ class App extends Component {
         });
       }
 
-      this.getBookDetails();
-      this.getMovieDetails();
+      this.setBookDetails();
+      this.setMovieDetails();
       this.checkWhichIsBetter();
+      this.ref.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
       // Update recent searches if search is successful
       if (
         this.state.movieTitle !== undefined &&
@@ -231,11 +238,6 @@ class App extends Component {
       }
       // Load Vote Count
       this.loadVotes(this.state.book.work.id, this.state.movie.id);
-      this.ref.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-
     } catch (error) {
       Swal.fire({
         title: "Please Try Again",
@@ -245,7 +247,9 @@ class App extends Component {
       });
     }
   };
-  getBookDetails = () => {
+
+  // sets Book details in state.
+  setBookDetails = () => {
     if (this.state.book) {
       const popBook = { ...this.state.book };
       if (popBook.authors.author[0]) {
@@ -269,7 +273,8 @@ class App extends Component {
     }
   };
 
-  getMovieDetails = () => {
+  // sets Movie details in state
+  setMovieDetails = () => {
     const popMovie = { ...this.state.movie };
     this.setState({
       movieTitle: popMovie.title,
@@ -279,6 +284,7 @@ class App extends Component {
     });
   };
 
+  // set state isBookbetter to true if the book rating is higher
   checkWhichIsBetter = () => {
     if (this.state.movieRating > this.state.bookRating) {
       this.setState({
@@ -324,12 +330,14 @@ class App extends Component {
     return jsonResult;
   };
 
+  // Handle the change in each type   
   handleChange = (event) => {
     this.setState({
       query: event.target.value,
     });
   };
 
+  // when submit event is initiated  set the loading to true until the API is recieved
   handleSubmit = (event) => {
     this.setState({
       loading: true,
