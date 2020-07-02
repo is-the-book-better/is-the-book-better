@@ -31,6 +31,7 @@ class App extends Component {
       movieImageUrl: "",
       movieRating: "",
       movieDescription: "",
+      voted: false,
     };
   }
 
@@ -102,8 +103,6 @@ class App extends Component {
       dbRefMovies.set(newMovieVotes);
       console.log("Updated Firebase Movies!");
     }
-    // this.upvote("book", bookId);
-    // this.upvote("movie", movieId);
   }
 
   doRecentSearch = (e) => {
@@ -117,18 +116,30 @@ class App extends Component {
     );
   };
 
-  upvote(platform, id) {
+  upVote(platform, id) {
+    console.log("upvoting!");
     if (platform === "book") {
       const dbRefBooks = firebase.database().ref("books");
       let newBooks = this.state.booksVotes;
       newBooks[id] += 1;
       dbRefBooks.set(newBooks);
+      const newVote = this.state.currentBookVotes + 1;
+      this.setState({
+        currentBookVotes: newVote,
+      });
     } else if (platform === "movie") {
       const dbRefMovies = firebase.database().ref("movies");
       let newMovies = this.state.moviesVotes;
       newMovies[id] += 1;
       dbRefMovies.set(newMovies);
+      const newVote = this.state.currentMovieVotes + 1;
+      this.setState({
+        currentMovieVotes: newVote,
+      });
     }
+    this.setState({
+      voted: true,
+    });
   }
 
   // Update recent searches
@@ -144,7 +155,9 @@ class App extends Component {
 
   // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
   searchResults = async () => {
-    console.log(this.state.query);
+    this.setState({
+      voted: false,
+    });
     try {
       // let googleBooks = await axios({
       //   method: "GET",
@@ -339,6 +352,12 @@ class App extends Component {
               movieScore={this.state.movieRating}
               bookVotes={this.state.currentBookVotes}
               movieVotes={this.state.currentMovieVotes}
+              upVote={(platform, id) => {
+                this.upVote(platform, id);
+              }}
+              bookId={this.state.book.work.id}
+              movieId={this.state.movie.id}
+              voted={this.state.voted}
             />
             <Description
               bookTitle={this.state.bookTitle}

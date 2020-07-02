@@ -466,12 +466,13 @@ textarea {
 }
 
 .ratings {
+  color: #5da9c2;
   padding: 1.5rem 0;
   background-color: #ace8cd;
-  color: #261870;
 }
 
 .ratings h3 {
+  color: #261870;
   font-size: 2.25rem;
   margin-bottom: 0.5rem;
   font-family: "Maitree", serif;
@@ -491,7 +492,6 @@ textarea {
 }
 
 .ratings i {
-  color: #5da9c2;
   font-size: 1.125rem;
 }
 
@@ -543,15 +543,15 @@ textarea {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
 .vote {
+  color: #5da9c2;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -562,11 +562,23 @@ textarea {
       -ms-flex-align: center;
           align-items: center;
   padding: 1rem;
-  width: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  background: none;
+  border: none;
 }
 
 .vote i {
   font-size: 4.5rem;
+}
+
+.vote:hover {
+  color: #261870;
+}
+
+.vote:focus {
+  outline: 1px solid #261870;
 }
 
 .descriptionWrapper {
@@ -762,12 +774,16 @@ form button:hover, form button:focus {
 .recentContainer {
   width: 100%;
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .recentSearches {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   width: 90%;
   margin: 0 auto;
   overflow-x: hidden;
