@@ -91,7 +91,6 @@ class App extends Component {
       let newBookVotes = this.state.booksVotes;
       newBookVotes[`${bookId}`] = 0;
       dbRefBooks.set(newBookVotes);
-      console.log("Updated Firebase Books!");
     }
     // eslint-disable-next-line eqeqeq
     if (
@@ -101,12 +100,10 @@ class App extends Component {
       let newMovieVotes = this.state.moviesVotes;
       newMovieVotes[`${movieId}`] = 0;
       dbRefMovies.set(newMovieVotes);
-      console.log("Updated Firebase Movies!");
     }
   }
 
   doRecentSearch = (e) => {
-    console.log("performing");
     e.preventDefault();
     this.setState(
       {
@@ -117,7 +114,6 @@ class App extends Component {
   };
 
   upVote(platform, id) {
-    console.log("upvoting!");
     if (platform === "book") {
       const dbRefBooks = firebase.database().ref("books");
       let newBooks = this.state.booksVotes;
@@ -178,8 +174,6 @@ class App extends Component {
           q: this.state.query,
         },
       });
-
-      console.log("got books");
       const books = this.parseXMLResponse(res.data);
 
       const bookId = books[0].best_book.id;
@@ -191,10 +185,8 @@ class App extends Component {
         },
       });
 
-      console.log("got book details");
       let bookObj = parser.parse(bookDetail.data);
       let book = bookObj.GoodreadsResponse.book;
-      console.log(book);
       let moviesApi = await axios({
         method: "GET",
         url: "https://api.themoviedb.org/3/search/movie?",
@@ -208,9 +200,6 @@ class App extends Component {
         },
       });
 
-      console.log("got movies");
-      // console.log(books);
-      // const books = googleBooks.data.items;
       const movies = moviesApi.data.results;
       const movie = movies[0];
       this.setState({
@@ -336,8 +325,6 @@ class App extends Component {
           </form>
           <Recents recents={this.state.recent} doSearch={this.doRecentSearch} />
         </header>
-        {/* {console.log(popMovie)} */}
-        {/* {console.log(popBook)} */}
         {popBook && popMovie ? (
           <>
             <MainComp
