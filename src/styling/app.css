@@ -338,6 +338,11 @@ textarea {
   overflow: hidden;
 }
 
+.mainWrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .mainCompWrapper {
   font-family: "Maitree", serif;
   text-align: center;
@@ -729,6 +734,7 @@ form input {
   padding: 10px;
   margin: 20px 0;
   background: #ace8cd;
+  color: #261870;
   border-style: none;
   border-radius: 10px;
 }
@@ -743,7 +749,6 @@ form input {
 
 @media (min-width: 1280px) {
   form input {
-    padding: 1.25rem;
     font-size: 1.75rem;
     width: 40vw;
   }
@@ -754,25 +759,27 @@ form button {
   padding: 10px;
   border-radius: 10px;
   background-color: #ace8cd;
+  color: #261870;
   border-style: none;
 }
 
 form button:hover, form button:focus {
-  border: 2px solid #261870;
+  background-color: #261870;
+  color: #ace8cd;
 }
 
 @media (min-width: 768px) {
   form button {
     width: 8rem;
-    padding: 1rem;
+    margin-bottom: 90px;
+    padding: .5rem;
     font-size: 1.25rem;
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1280px) {
   form button {
     width: 10rem;
-    padding: 1.5rem;
     font-size: 1.5rem;
   }
 }
@@ -806,11 +813,7 @@ form button:hover, form button:focus {
   color: #261870;
 }
 
-.recentSearches button:focus {
-  outline: 1px solid #261870;
+.recentSearches button:hover, .recentSearches button:focus {
+  background-color: #261870;
+  color: #ace8cd;
 }
-
-/*
-colors: $darkBlue, $lightBlue, $green
-fonts: $sans-serif, $serif
-*/

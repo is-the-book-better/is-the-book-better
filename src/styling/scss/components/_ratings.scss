@@ -17,7 +17,6 @@
     @include responsiveMedia(iPad) {
       font-size: 3rem;
     }
-
     @include responsiveMedia(laptop) {
       font-size: 4rem;
     }
@@ -28,7 +27,6 @@
     @include responsiveMedia(iPad) {
       font-size: 2rem;
     }
-
     @include responsiveMedia(laptop) {
       font-size: 3rem;
     }

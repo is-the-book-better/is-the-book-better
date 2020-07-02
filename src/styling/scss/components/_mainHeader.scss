@@ -49,6 +49,7 @@ form {
     padding: 10px;
     margin: 20px 0;
     background: $green;
+    color: $darkBlue;
     border-style: none;
     border-radius: 10px;
     @include responsiveMedia(iPad) {
@@ -57,7 +58,6 @@ form {
       width: 50vw;
     }
     @include responsiveMedia(laptop) {
-      padding: 1.25rem;
       font-size: 1.75rem;
       width: 40vw;
     }
@@ -68,20 +68,22 @@ form {
     padding: 10px;
     border-radius: 10px;
     background-color: $green;
+    color: $darkBlue;
     border-style: none;
+    
     &:hover,
     &:focus {
-      border: 2px solid $darkBlue;
+      background-color: $darkBlue;
+      color:$green;
     }
-
     @include responsiveMedia(iPad) {
       width: 8rem;
-      padding: 1rem;
+      margin-bottom: 90px;
+      padding: .5rem;
       font-size: 1.25rem;
     }
-    @include responsiveMedia(iPad) {
+    @include responsiveMedia(laptop) {
       width: 10rem;
-      padding: 1.5rem;
       font-size: 1.5rem;
     }
   }
@@ -89,7 +91,6 @@ form {
 
 .recentContainer {
   width: 100%;
-  // height: 100%;
   overflow: hidden;
   margin: 0 auto;
 }
@@ -98,10 +99,7 @@ form {
   display: flex;
   justify-content: space-between;
   width: 90%;
-  // height: 100%;
   margin: 0 auto;
-
-  // height: 20vh;
   overflow-x: hidden;
 
   button {
@@ -114,8 +112,11 @@ form {
     margin: 0.5rem;
     color: $darkBlue;
 
+    &:hover,
     &:focus {
-      outline: 1px solid $darkBlue;
+ 
+      background-color: $darkBlue;
+      color:$green;
     }
   }
 }

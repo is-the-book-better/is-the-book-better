@@ -1,8 +1,8 @@
-import React, { Component, Fragment, createRef } from "react";
-import Recents from "./Recents";
-import MainComp from "./MainComp";
-import Ratings from "./Ratings";
-import Description from "./Description";
+import React, { Component, createRef } from "react";
+import Recents from "./Components/Recents";
+import MainComp from "./Components/MainComp";
+import Ratings from "./Components/Ratings";
+import Description from "./Components/Description";
 import axios from "axios";
 import firebase from "./firebase";
 import parser from "fast-xml-parser";
@@ -40,12 +40,11 @@ class App extends Component {
 
   componentDidMount() {
     this.getRecentSearches();
-    this.searchResults();
     this.getVotes();
   }
 
   // Retrieve recent searches
-  getRecentSearches() {
+  getRecentSearches = () => {
     const dbRef = firebase.database().ref();
     dbRef.on("value", (response) => {
       const data = response.val();
@@ -55,7 +54,7 @@ class App extends Component {
     });
   }
 
-  getVotes() {
+  getVotes = () => {
     const dbRef = firebase.database().ref();
     dbRef.on("value", (response) => {
       const data = response.val();
@@ -67,7 +66,7 @@ class App extends Component {
     });
   }
 
-  loadVotes(bookId, movieId) {
+  loadVotes = (bookId, movieId) => {
     const dbRefBooks = firebase.database().ref("books");
     const dbRefMovies = firebase.database().ref("movies");
 
@@ -116,7 +115,7 @@ class App extends Component {
     );
   };
 
-  upVote(platform, id) {
+  upVote = (platform, id) => {
     if (platform === "book") {
       const dbRefBooks = firebase.database().ref("books");
       let newBooks = this.state.booksVotes;
@@ -142,7 +141,7 @@ class App extends Component {
   }
 
   // Update recent searches
-  updateRecentSearches() {
+  updateRecentSearches = () => {
     const dbRef = firebase.database().ref("recent");
     let recent = this.state.recent;
 
@@ -169,7 +168,7 @@ class App extends Component {
         url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?`,
 
         params: {
-          key: "odsRW5CclbTNlqFbZCaC4A",
+          key: process.env.REACT_APP_GOODREADS_API_KEY,
           q: this.state.query,
         },
       });
@@ -183,7 +182,9 @@ class App extends Component {
           key: "odsRW5CclbTNlqFbZCaC4A",
         },
       });
+
       const bookObj = parser.parse(bookDetail.data);
+      console.log(bookObj);
       const book = bookObj.GoodreadsResponse.book;
       const moviesApi = await axios({
         method: "GET",
@@ -257,13 +258,24 @@ class App extends Component {
   getBookDetails = () => {
     if (this.state.book) {
       const popBook = { ...this.state.book };
-      this.setState({
-        bookTitle: popBook.title,
-        bookAuthor: popBook.authors.author.name,
-        bookImageUrl: popBook.image_url,
-        bookRating: popBook.average_rating.toFixed(1),
-        bookDescription: popBook.description,
-      });
+      if (popBook.authors.author[0]) {
+        this.setState({
+          bookTitle: popBook.title,
+          bookAuthor: popBook.authors.author[0].name,
+          bookImageUrl: popBook.image_url,
+          bookRating: popBook.average_rating.toFixed(1),
+          bookDescription: popBook.description,
+        });
+      } else {
+        this.setState({
+          bookTitle: popBook.title,
+          bookAuthor: popBook.authors.author.name,
+          bookImageUrl: popBook.image_url,
+          bookRating: popBook.average_rating.toFixed(1),
+          bookDescription: popBook.description,
+        });
+      }
+
     }
   };
 
@@ -338,25 +350,26 @@ class App extends Component {
 
   render() {
     return (
-      <Fragment>
+
+      <div className="mainWrapper">
         <header>
-          <h1>Is the Book Better?</h1>
-          <p>Enter the item below to find out</p>
+          <h1>Is The Book Better?</h1>
+          <p>Find out if your favourite book is better than the movie </p>
           <form onSubmit={this.handleSubmit}>
             <label className="visuallyHidden" htmlFor="searchBar">
               Search Bar
-            </label>
+              </label>
             <input
               type="search"
               name="query"
               id="searchBar"
               onChange={this.handleChange}
               value={this.state.query}
-              placeholder="Enter here..."
+              placeholder="Type a Book Title..."
             />
             <button type="submit" onClick={this.handleSubmit}>
               Submit
-            </button>
+              </button>
           </form>
           <Recents recents={this.state.recent} doSearch={this.doRecentSearch} />
         </header>
@@ -388,11 +401,10 @@ class App extends Component {
               movieDescription={this.state.movieDescription}
               bookDescription={this.state.bookDescription}
             />
-            
+
           </>
         ) : null}
-
-      </Fragment>
+      </div>
     );
   }
 }

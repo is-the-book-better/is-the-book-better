@@ -300,3 +300,11 @@ textarea {
   clip: rect(00 0 0);
   overflow: hidden;
 }
+
+.mainWrapper{
+  max-width: 1400px;
+  margin: 0 auto;
+  // :nth-child(3){
+  //   width: 100%;
+  // } 
+}
