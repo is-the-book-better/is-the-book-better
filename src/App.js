@@ -62,47 +62,47 @@ class App extends Component {
     });
   }
 
-  // loadVotes(bookId, movieId) {
-  //   const dbRefBooks = firebase.database().ref("books");
-  //   const dbRefMovies = firebase.database().ref("movies");
+  loadVotes(bookId, movieId) {
+    const dbRefBooks = firebase.database().ref("books");
+    const dbRefMovies = firebase.database().ref("movies");
 
-  //   for (let key in this.state.booksVotes) {
-  //     // eslint-disable-next-line eqeqeq
-  //     if (key == bookId) {
-  //       this.setState({
-  //         currentBookVotes: this.state.booksVotes[key],
-  //       });
-  //     }
-  //   }
+    for (let key in this.state.booksVotes) {
+      // eslint-disable-next-line eqeqeq
+      if (key == bookId) {
+        this.setState({
+          currentBookVotes: this.state.booksVotes[key],
+        });
+      }
+    }
 
-  //   for (let key in this.state.moviesVotes) {
-  //     // eslint-disable-next-line eqeqeq
-  //     if (key == movieId) {
-  //       this.setState({
-  //         currentMovieVotes: this.state.moviesVotes[key],
-  //       });
-  //     }
-  //   }
+    for (let key in this.state.moviesVotes) {
+      // eslint-disable-next-line eqeqeq
+      if (key == movieId) {
+        this.setState({
+          currentMovieVotes: this.state.moviesVotes[key],
+        });
+      }
+    }
 
-  //   // eslint-disable-next-line eqeqeq
-  //   if (!this.state.booksVotes[bookId] && this.state.booksVotes[bookId] != 0) {
-  //     let newBookVotes = this.state.booksVotes;
-  //     newBookVotes[`${bookId}`] = 0;
-  //     dbRefBooks.set(newBookVotes);
-  //     console.log("Updated Firebase Books!");
-  //   }
-  //   // eslint-disable-next-line eqeqeq
-  //   if (
-  //     !this.state.moviesVotes[movieId] &&
-  //     this.state.moviesVotes[movieId] != 0
-  //   ) {
-  //     let newMovieVotes = this.state.moviesVotes;
-  //     newMovieVotes[`${movieId}`] = 0;
-  //     dbRefMovies.set(newMovieVotes);
-  //     console.log("Updated Firebase Movies!");
-  //   }
-  //   // }
-  // }
+    // eslint-disable-next-line eqeqeq
+    if (!this.state.booksVotes[bookId] && this.state.booksVotes[bookId] != 0) {
+      let newBookVotes = this.state.booksVotes;
+      newBookVotes[`${bookId}`] = 0;
+      dbRefBooks.set(newBookVotes);
+      console.log("Updated Firebase Books!");
+    }
+    // eslint-disable-next-line eqeqeq
+    if (
+      !this.state.moviesVotes[movieId] &&
+      this.state.moviesVotes[movieId] != 0
+    ) {
+      let newMovieVotes = this.state.moviesVotes;
+      newMovieVotes[`${movieId}`] = 0;
+      dbRefMovies.set(newMovieVotes);
+      console.log("Updated Firebase Movies!");
+    }
+    // }
+  }
 
   // Update recent searches
   updateRecentSearches() {
