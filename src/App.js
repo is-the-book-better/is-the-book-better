@@ -1,4 +1,3 @@
-
 import React, { Component, Fragment, createRef } from "react";
 import Recents from "./Recents";
 import MainComp from "./MainComp";
@@ -6,8 +5,8 @@ import Ratings from "./Ratings";
 import Description from "./Description";
 import axios from "axios";
 import firebase from "./firebase";
-import parser from 'fast-xml-parser';
-import Swal from 'sweetalert2'
+import parser from "fast-xml-parser";
+import Swal from "sweetalert2";
 
 class App extends Component {
   constructor() {
@@ -29,17 +28,15 @@ class App extends Component {
       currentMovieVotes: "",
       movies: [],
       movie: {},
-      movieTitle: '',
-      movieImageUrl: '',
-      movieRating: '',
-      movieDescription: '',
+      movieTitle: "",
+      movieImageUrl: "",
+      movieRating: "",
+      movieDescription: "",
       voted: false,
-      loading: true
-
+      loading: true,
     };
     this.ref = createRef();
   }
-
 
   componentDidMount() {
     this.getRecentSearches();
@@ -159,7 +156,10 @@ class App extends Component {
   // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
   searchResults = async () => {
     this.setState({
+      ...this.state,
       voted: false,
+      currentBookVotes: 0,
+      currentMovieVotes: 0,
     });
 
     try {
@@ -180,10 +180,9 @@ class App extends Component {
         method: "GET",
         url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/show/${bookId}.xml?`,
         params: {
-
-          key: "odsRW5CclbTNlqFbZCaC4A"
-        }
-      })
+          key: "odsRW5CclbTNlqFbZCaC4A",
+        },
+      });
       const bookObj = parser.parse(bookDetail.data);
       const book = bookObj.GoodreadsResponse.book;
       const moviesApi = await axios({
@@ -204,18 +203,18 @@ class App extends Component {
 
       if (!movie) {
         Swal.fire({
-          title: 'Please Try Again',
-          text: 'Try Typing Valid Movie Title',
-          icon: 'error',
-          confirmButtonColor: '#5da9c2',
-        })
+          title: "Please Try Again",
+          text: "Try Typing Valid Movie Title",
+          icon: "error",
+          confirmButtonColor: "#5da9c2",
+        });
       } else if (!book) {
         Swal.fire({
-          title: 'Please Try Again',
-          text: 'Try Typing Valid Book Title',
-          icon: 'error',
-          confirmButtonColor: '#5da9c2',
-        })
+          title: "Please Try Again",
+          text: "Try Typing Valid Book Title",
+          icon: "error",
+          confirmButtonColor: "#5da9c2",
+        });
       }
 
       this.setState({
@@ -224,8 +223,7 @@ class App extends Component {
         movies,
         movie,
 
-        loading: false
-
+        loading: false,
       });
 
       this.getBookDetails();
@@ -243,17 +241,16 @@ class App extends Component {
 
       this.checkWhichIsBetter();
       this.ref.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+        behavior: "smooth",
+        block: "start",
       });
-
     } catch (error) {
       Swal.fire({
-        title: 'Please Try Again',
-        text: 'Something went wrong, Try typing a movie or a book title',
-        icon: 'error',
-        confirmButtonColor: '#5da9c2',
-      })
+        title: "Please Try Again",
+        text: "Something went wrong, Try typing a movie or a book title",
+        icon: "error",
+        confirmButtonColor: "#5da9c2",
+      });
     }
   };
 
@@ -264,7 +261,7 @@ class App extends Component {
         bookTitle: popBook.title,
         bookAuthor: popBook.authors.author.name,
         bookImageUrl: popBook.image_url,
-        bookRating: (popBook.average_rating).toFixed(1),
+        bookRating: popBook.average_rating.toFixed(1),
         bookDescription: popBook.description,
       });
     }
@@ -283,14 +280,14 @@ class App extends Component {
   checkWhichIsBetter = () => {
     if (this.state.movieRating > this.state.bookRating) {
       this.setState({
-        isBookBetter: false
-      })
+        isBookBetter: false,
+      });
     } else {
       this.setState({
-        isBookBetter: true
-      })
+        isBookBetter: true,
+      });
     }
-  }
+  };
 
   // parse string xml received from goodreads api
   parseXMLResponse = (response) => {
@@ -327,24 +324,19 @@ class App extends Component {
 
   handleChange = (event) => {
     this.setState({
-
-      query: event.target.value
-    })
-  }
-
+      query: event.target.value,
+    });
+  };
 
   handleSubmit = (event) => {
     this.setState({
-      loading: true
-    })
+      loading: true,
+    });
     this.searchResults();
     event.preventDefault();
-  }
-
-
+  };
 
   render() {
-
     return (
       <Fragment>
         <header>
@@ -368,18 +360,17 @@ class App extends Component {
           </form>
           <Recents recents={this.state.recent} doSearch={this.doRecentSearch} />
         </header>
-        {
-          !this.state.loading ?
-            <>
-              <MainComp
-                scrollRef={this.ref}
-                isBookBetter={this.state.isBookBetter}
-                title={this.state.bookTitle}
-                movieImageUrl={this.state.movieImageUrl}
-                bookImageUrl={this.state.bookImageUrl}
-                bookAuthor={this.state.bookAuthor}
-              />
-              <Ratings
+        {!this.state.loading ? (
+          <>
+            <MainComp
+              scrollRef={this.ref}
+              isBookBetter={this.state.isBookBetter}
+              title={this.state.bookTitle}
+              movieImageUrl={this.state.movieImageUrl}
+              bookImageUrl={this.state.bookImageUrl}
+              bookAuthor={this.state.bookAuthor}
+            />
+            <Ratings
               bookScore={this.state.bookRating}
               movieScore={this.state.movieRating}
               bookVotes={this.state.currentBookVotes}
@@ -391,16 +382,14 @@ class App extends Component {
               movieId={this.state.movie.id}
               voted={this.state.voted}
             />
-              <Description
-                bookTitle={this.state.bookTitle}
-                movieTitle={this.state.movieTitle}
-                movieDescription={this.state.movieDescription}
-                bookDescription={this.state.bookDescription}
-              />
-            </> :
-            null
-        }
-
+            <Description
+              bookTitle={this.state.bookTitle}
+              movieTitle={this.state.movieTitle}
+              movieDescription={this.state.movieDescription}
+              bookDescription={this.state.bookDescription}
+            />
+          </>
+        ) : null}
       </Fragment>
     );
   }
