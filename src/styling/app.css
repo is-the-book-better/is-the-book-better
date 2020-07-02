@@ -573,7 +573,7 @@ textarea {
   width: 90%;
   margin: 0 auto;
   font-family: "Maitree", serif;
-  line-height: 28px;
+  line-height: 24px;
 }
 
 .descriptionWrapper div {
@@ -604,7 +604,7 @@ textarea {
 
 .descriptionWrapper p {
   padding: 5px 15px;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 @media (min-width: 768px) {
@@ -620,11 +620,18 @@ textarea {
   }
 }
 
-@media (min-width: 790px) {
+@media (min-width: 768px) {
   .descriptionWrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+  }
+  .descriptionWrapper .bookWrapper, .descriptionWrapper .movieWrapper {
+    width: 50%;
+    line-height: 28px;
+  }
+  .descriptionWrapper .bookWrapper h2, .descriptionWrapper .movieWrapper h2 {
+    line-height: 48px;
   }
 }
 

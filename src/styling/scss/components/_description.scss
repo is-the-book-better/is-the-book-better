@@ -9,7 +9,7 @@
   width: 90%;
   margin: 0 auto;
   font-family: $serif;
-  line-height: 28px;
+  line-height: 24px;
 
   div {
     // border: 1px solid red;
@@ -37,7 +37,7 @@
 
   p {
     padding: 5px 15px;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
 
     @include responsiveMedia(iPad) {
       font-size: 1.25rem;
@@ -50,8 +50,16 @@
   }
 }
 
-@media (min-width: 790px) {
+@media (min-width: 768px) {
   .descriptionWrapper {
     display: flex;
+    .bookWrapper, .movieWrapper {
+      width: 50%;
+      line-height: 28px;
+      h2 {
+        line-height: 48px;
+      }
+    }
+
   }
 }

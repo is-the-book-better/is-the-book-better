@@ -2,9 +2,11 @@ import React, { Component, Fragment, createRef } from "react";
 import MainComp from "./MainComp";
 import Ratings from "./Ratings";
 import Description from "./Description";
+// import Footer from "./Footer";
 import axios from "axios";
 import parser from 'fast-xml-parser';
 import Swal from 'sweetalert2'
+
 
 class App extends Component {
   constructor() {
