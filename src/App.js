@@ -401,9 +401,15 @@ class App extends Component {
               movieDescription={this.state.movieDescription}
               bookDescription={this.state.bookDescription}
             />
+            
           </>
         ) : null}
+<<<<<<< HEAD
       </div>
+=======
+
+      </Fragment>
+>>>>>>> e26badaf7372b78443b180b5290e57954bb42b49
     );
   }
 }
