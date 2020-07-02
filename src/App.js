@@ -142,11 +142,12 @@ class App extends Component {
   updateRecentSearches() {
     const dbRef = firebase.database().ref("recent");
     let recent = this.state.recent;
-    if (recent.length > 9) {
+
+    if (recent.length > 9 && !recent.includes(this.state.query)) {
       recent.pop();
+      recent.unshift(this.state.query);
+      dbRef.set(recent);
     }
-    recent.unshift(this.state.query);
-    dbRef.set(recent);
   }
 
   // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
