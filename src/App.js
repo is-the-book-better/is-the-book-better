@@ -40,7 +40,7 @@ class App extends Component {
         method: "GET",
         url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?`,
         params: {
-          key: "odsRW5CclbTNlqFbZCaC4A",
+          key: process.env.REACT_APP_GOODREADS_API_KEY,
           q: this.state.query,
         },
       });
@@ -50,7 +50,7 @@ class App extends Component {
         method: "GET",
         url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/show/${bookId}.xml?`,
         params: {
-          key: "odsRW5CclbTNlqFbZCaC4A"
+          key: process.env.REACT_APP_GOODREADS_API_KEY,
         }
       })
       const bookObj = parser.parse(bookDetail.data);
@@ -60,7 +60,7 @@ class App extends Component {
         url: "https://api.themoviedb.org/3/search/movie?",
         paramType: "json",
         params: {
-          api_key: "4851783a531664a8fc58abf098309ada",
+          api_key: process.env.REACT_APP_MOVIE_API_KEY,
           language: 'en-US',
           query: this.state.query,
           page: '1',
