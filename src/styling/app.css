@@ -601,15 +601,15 @@ textarea {
 
 @media (min-width: 768px) {
   .descriptionWrapper h2 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     padding-top: 2rem;
     padding-bottom: 1rem;
+    line-height: 50px;
   }
 }
 
 @media (min-width: 1280px) {
   .descriptionWrapper h2 {
-    font-size: 4rem;
     padding-bottom: 3rem;
   }
 }
@@ -632,11 +632,17 @@ textarea {
   }
 }
 
-@media (min-width: 790px) {
+@media (min-width: 768px) {
   .descriptionWrapper {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .descriptionWrapper .bookWrapper, .descriptionWrapper .movieWrapper {
+    width: 48%;
   }
 }
 
