@@ -219,21 +219,6 @@ class App extends Component {
         });
       }
 
-      //   this.setState({
-      //     loading: true
-      //   })
-      // } else if (!book) {
-      //   Swal.fire({
-      //     title: "Please Try Again",
-      //     text: "Try Typing Valid Book Title",
-      //     icon: "error",
-      //     confirmButtonColor: "#5da9c2",
-      //   });
-      //   this.setState({
-      //     loading: true
-      //   })
-      // }
-
       this.getBookDetails();
       this.getMovieDetails();
       this.checkWhichIsBetter();
