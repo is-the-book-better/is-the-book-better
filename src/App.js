@@ -101,7 +101,22 @@ class App extends Component {
       dbRefMovies.set(newMovieVotes);
       console.log("Updated Firebase Movies!");
     }
-    // }
+    // this.upvote("book", bookId);
+    // this.upvote("movie", movieId);
+  }
+
+  upvote(platform, id) {
+    if (platform === "book") {
+      const dbRefBooks = firebase.database().ref("books");
+      let newBooks = this.state.booksVotes;
+      newBooks[id] += 1;
+      dbRefBooks.set(newBooks);
+    } else if (platform === "movie") {
+      const dbRefMovies = firebase.database().ref("movies");
+      let newMovies = this.state.moviesVotes;
+      newMovies[id] += 1;
+      dbRefMovies.set(newMovies);
+    }
   }
 
   // Update recent searches
