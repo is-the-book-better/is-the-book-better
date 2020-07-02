@@ -306,6 +306,8 @@ class App extends Component {
             <Ratings
               bookScore={this.state.bookRating}
               movieScore={this.state.movieRating}
+              bookVotes={this.state.currentBookVotes}
+              movieVotes={this.state.currentMovieVotes}
             />
             <Description
               bookTitle={this.state.bookTitle}

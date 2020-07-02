@@ -2,7 +2,7 @@ import React from "react";
 import Rating from "./Rating";
 import Vote from "./Vote";
 
-const Ratings = ({ bookScore, movieScore }) => {
+const Ratings = ({ bookScore, movieScore, bookVotes, movieVotes }) => {
   return (
     <div className="ratings">
       <div className="ratings-wrapper">
