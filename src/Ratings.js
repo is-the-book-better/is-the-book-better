@@ -2,7 +2,16 @@ import React from "react";
 import Rating from "./Rating";
 import Vote from "./Vote";
 
-const Ratings = ({ bookScore, movieScore }) => {
+const Ratings = ({
+  bookScore,
+  movieScore,
+  bookVotes,
+  movieVotes,
+  upVote,
+  bookId,
+  movieId,
+  voted,
+}) => {
   return (
     <div className="ratings">
       <div className="ratings-wrapper">
@@ -13,8 +22,22 @@ const Ratings = ({ bookScore, movieScore }) => {
         </div>
         <h3>Vote</h3>
         <div className="voteRatings">
-          <Vote medium="book" />
-          <Vote medium="movie" />
+          <Vote
+            medium="book"
+            votes={bookVotes}
+            upVote={() => {
+              upVote("book", bookId);
+            }}
+            voted={voted}
+          />
+          <Vote
+            medium="movie"
+            votes={movieVotes}
+            upVote={() => {
+              upVote("movie", movieId);
+            }}
+            voted={voted}
+          />
         </div>
       </div>
     </div>

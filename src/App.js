@@ -1,8 +1,11 @@
+
 import React, { Component, Fragment, createRef } from "react";
+import Recents from "./Recents";
 import MainComp from "./MainComp";
 import Ratings from "./Ratings";
 import Description from "./Description";
 import axios from "axios";
+import firebase from "./firebase";
 import parser from 'fast-xml-parser';
 import Swal from 'sweetalert2'
 
@@ -10,46 +13,174 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      query: '',
+      recent: [],
+      query: "",
       isBookBetter: true,
-      bookAuthor: '',
+      bookAuthor: "",
       book: {},
+      booksVotes: [],
+      currentBookVotes: "",
       books: [],
-      bookTitle: '',
-      bookImageUrl: '',
-      bookRating: '',
-      bookDescription: '',
+      bookTitle: "",
+      bookImageUrl: "",
+      bookRating: "",
+      bookDescription: "",
+      moviesVotes: [],
+      currentMovieVotes: "",
       movies: [],
       movie: {},
       movieTitle: '',
       movieImageUrl: '',
       movieRating: '',
       movieDescription: '',
+      voted: false,
       loading: true
+
     };
     this.ref = createRef();
   }
 
-  // componentDidMount() {
 
-  // }
+  componentDidMount() {
+    this.getRecentSearches();
+    this.searchResults();
+    this.getVotes();
+  }
 
+  // Retrieve recent searches
+  getRecentSearches() {
+    const dbRef = firebase.database().ref();
+    dbRef.on("value", (response) => {
+      const data = response.val();
+      this.setState({
+        recent: data.recent,
+      });
+    });
+  }
+
+  getVotes() {
+    const dbRef = firebase.database().ref();
+    dbRef.on("value", (response) => {
+      const data = response.val();
+      this.setState({
+        ...this.state,
+        booksVotes: data.books,
+        moviesVotes: data.movies,
+      });
+    });
+  }
+
+  loadVotes(bookId, movieId) {
+    const dbRefBooks = firebase.database().ref("books");
+    const dbRefMovies = firebase.database().ref("movies");
+
+    for (let key in this.state.booksVotes) {
+      // eslint-disable-next-line eqeqeq
+      if (key == bookId) {
+        this.setState({
+          currentBookVotes: this.state.booksVotes[key],
+        });
+      }
+    }
+
+    for (let key in this.state.moviesVotes) {
+      // eslint-disable-next-line eqeqeq
+      if (key == movieId) {
+        this.setState({
+          currentMovieVotes: this.state.moviesVotes[key],
+        });
+      }
+    }
+
+    // eslint-disable-next-line eqeqeq
+    if (!this.state.booksVotes[bookId] && this.state.booksVotes[bookId] != 0) {
+      let newBookVotes = this.state.booksVotes;
+      newBookVotes[`${bookId}`] = 0;
+      dbRefBooks.set(newBookVotes);
+    }
+    // eslint-disable-next-line eqeqeq
+    if (
+      !this.state.moviesVotes[movieId] &&
+      this.state.moviesVotes[movieId] !== 0
+    ) {
+      let newMovieVotes = this.state.moviesVotes;
+      newMovieVotes[`${movieId}`] = 0;
+      dbRefMovies.set(newMovieVotes);
+    }
+  }
+
+  doRecentSearch = (e) => {
+    e.preventDefault();
+    this.setState(
+      {
+        query: e.target.value,
+      },
+      this.searchResults
+    );
+  };
+
+  upVote(platform, id) {
+    if (platform === "book") {
+      const dbRefBooks = firebase.database().ref("books");
+      let newBooks = this.state.booksVotes;
+      newBooks[id] += 1;
+      dbRefBooks.set(newBooks);
+      const newVote = this.state.currentBookVotes + 1;
+      this.setState({
+        currentBookVotes: newVote,
+      });
+    } else if (platform === "movie") {
+      const dbRefMovies = firebase.database().ref("movies");
+      let newMovies = this.state.moviesVotes;
+      newMovies[id] += 1;
+      dbRefMovies.set(newMovies);
+      const newVote = this.state.currentMovieVotes + 1;
+      this.setState({
+        currentMovieVotes: newVote,
+      });
+    }
+    this.setState({
+      voted: true,
+    });
+  }
+
+  // Update recent searches
+  updateRecentSearches() {
+    const dbRef = firebase.database().ref("recent");
+    let recent = this.state.recent;
+
+    if (recent.length > 9 && !recent.includes(this.state.query)) {
+      recent.pop();
+      recent.unshift(this.state.query);
+      dbRef.set(recent);
+    }
+  }
+
+  // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
   searchResults = async () => {
+    this.setState({
+      voted: false,
+    });
+
     try {
       const res = await axios({
         method: "GET",
+
         url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/search/index.xml?`,
+
         params: {
           key: "odsRW5CclbTNlqFbZCaC4A",
           q: this.state.query,
         },
       });
       const books = this.parseXMLResponse(res.data);
+
       const bookId = books[0].best_book.id;
       const bookDetail = await axios({
         method: "GET",
         url: `https://cors-anywhere.herokuapp.com/https://www.goodreads.com/book/show/${bookId}.xml?`,
         params: {
+
           key: "odsRW5CclbTNlqFbZCaC4A"
         }
       })
@@ -61,12 +192,13 @@ class App extends Component {
         paramType: "json",
         params: {
           api_key: "4851783a531664a8fc58abf098309ada",
-          language: 'en-US',
+          language: "en-US",
           query: this.state.query,
-          page: '1',
-          include_adult: 'false',
+          page: "1",
+          include_adult: "false",
         },
       });
+
       const movies = moviesApi.data.results;
       const movie = movies[0];
 
@@ -91,16 +223,30 @@ class App extends Component {
         book,
         movies,
         movie,
+
         loading: false
+
       });
 
       this.getBookDetails();
       this.getMovieDetails();
+
+      // Update recent searches if search is successful
+      if (
+        this.state.movieTitle !== undefined &&
+        this.state.bookTitle !== undefined
+      ) {
+        this.updateRecentSearches();
+      }
+      // Load Vote Count
+      this.loadVotes(this.state.book.work.id, this.state.movie.id);
+
       this.checkWhichIsBetter();
       this.ref.current.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       });
+
     } catch (error) {
       Swal.fire({
         title: 'Please Try Again',
@@ -120,9 +266,9 @@ class App extends Component {
         bookImageUrl: popBook.image_url,
         bookRating: (popBook.average_rating).toFixed(1),
         bookDescription: popBook.description,
-      })
+      });
     }
-  }
+  };
 
   getMovieDetails = () => {
     const popMovie = { ...this.state.movie };
@@ -131,8 +277,8 @@ class App extends Component {
       movieImageUrl: `http://image.tmdb.org/t/p/w500/${popMovie.poster_path}`,
       movieRating: (popMovie.vote_average * 0.5).toFixed(1),
       movieDescription: popMovie.overview,
-    })
-  }
+    });
+  };
 
   checkWhichIsBetter = () => {
     if (this.state.movieRating > this.state.bookRating) {
@@ -181,9 +327,11 @@ class App extends Component {
 
   handleChange = (event) => {
     this.setState({
+
       query: event.target.value
     })
   }
+
 
   handleSubmit = (event) => {
     this.setState({
@@ -194,20 +342,31 @@ class App extends Component {
   }
 
 
+
   render() {
 
     return (
-
       <Fragment>
-
         <header>
           <h1>Is the Book Better?</h1>
           <p>Enter the item below to find out</p>
           <form onSubmit={this.handleSubmit}>
-            <label className="visuallyHidden" htmlFor="searchBar">Search Bar</label>
-            <input type="search" name="query" id="searchBar" onChange={this.handleChange} value={this.state.query} placeholder="Enter here..." />
-            <button type="submit" onClick={this.handleSubmit}>Submit</button>
+            <label className="visuallyHidden" htmlFor="searchBar">
+              Search Bar
+            </label>
+            <input
+              type="search"
+              name="query"
+              id="searchBar"
+              onChange={this.handleChange}
+              value={this.state.query}
+              placeholder="Enter here..."
+            />
+            <button type="submit" onClick={this.handleSubmit}>
+              Submit
+            </button>
           </form>
+          <Recents recents={this.state.recent} doSearch={this.doRecentSearch} />
         </header>
         {
           !this.state.loading ?
@@ -221,9 +380,17 @@ class App extends Component {
                 bookAuthor={this.state.bookAuthor}
               />
               <Ratings
-                bookScore={this.state.bookRating}
-                movieScore={this.state.movieRating}
-              />
+              bookScore={this.state.bookRating}
+              movieScore={this.state.movieRating}
+              bookVotes={this.state.currentBookVotes}
+              movieVotes={this.state.currentMovieVotes}
+              upVote={(platform, id) => {
+                this.upVote(platform, id);
+              }}
+              bookId={this.state.book.work.id}
+              movieId={this.state.movie.id}
+              voted={this.state.voted}
+            />
               <Description
                 bookTitle={this.state.bookTitle}
                 movieTitle={this.state.movieTitle}
@@ -233,6 +400,7 @@ class App extends Component {
             </> :
             null
         }
+
       </Fragment>
     );
   }
