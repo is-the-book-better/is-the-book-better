@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import Recents from "./Recents";
 import MainComp from "./MainComp";
 import Ratings from "./Ratings";
 import Description from "./Description";
@@ -104,6 +105,16 @@ class App extends Component {
     // this.upvote("book", bookId);
     // this.upvote("movie", movieId);
   }
+
+  doRecentSearch = (e) => {
+    e.preventDefault();
+    this.setState(
+      {
+        query: e.target.value,
+      },
+      this.searchResults
+    );
+  };
 
   upvote(platform, id) {
     if (platform === "book") {
@@ -306,6 +317,7 @@ class App extends Component {
               Submit
             </button>
           </form>
+          <Recents recents={this.state.recent} doSearch={this.doRecentSearch} />
         </header>
         {/* {console.log(popMovie)} */}
         {/* {console.log(popBook)} */}
