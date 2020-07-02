@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component, createRef, Fragment } from "react";
 import Recents from "./Components/Recents";
 import MainComp from "./Components/MainComp";
 import Ratings from "./Components/Ratings";
@@ -52,7 +52,7 @@ class App extends Component {
         recent: data.recent,
       });
     });
-  }
+  };
 
   getVotes = () => {
     const dbRef = firebase.database().ref();
@@ -64,7 +64,7 @@ class App extends Component {
         moviesVotes: data.movies,
       });
     });
-  }
+  };
 
   loadVotes = (bookId, movieId) => {
     const dbRefBooks = firebase.database().ref("books");
@@ -103,7 +103,7 @@ class App extends Component {
       newMovieVotes[`${movieId}`] = 0;
       dbRefMovies.set(newMovieVotes);
     }
-  }
+  };
 
   doRecentSearch = (e) => {
     e.preventDefault();
@@ -138,7 +138,7 @@ class App extends Component {
     this.setState({
       voted: true,
     });
-  }
+  };
 
   // Update recent searches
   updateRecentSearches = () => {
@@ -150,7 +150,7 @@ class App extends Component {
       recent.unshift(this.state.query);
       dbRef.set(recent);
     }
-  }
+  };
 
   // googleBooks- AIzaSyCgjf_DyKEqgJhJVRvLDx8owQU-u6VHEqY
   searchResults = async () => {
@@ -201,7 +201,6 @@ class App extends Component {
       const movies = moviesApi.data.results;
       const movie = movies[0];
 
-
       if (movie && book) {
         this.setState({
           books,
@@ -235,7 +234,6 @@ class App extends Component {
         behavior: "smooth",
         block: "start",
       });
-
     } catch (error) {
       Swal.fire({
         title: "Please Try Again",
@@ -265,7 +263,6 @@ class App extends Component {
           bookDescription: popBook.description,
         });
       }
-
     }
   };
 
@@ -340,39 +337,45 @@ class App extends Component {
 
   render() {
     return (
-
-      <div className="mainWrapper">
-        <header>
-          <h1>Is The Book Better?</h1>
-          <p>Find out if your favourite book is better than the movie </p>
-          <form onSubmit={this.handleSubmit}>
-            <label className="visuallyHidden" htmlFor="searchBar">
-              Search Bar
+      <Fragment>
+        <div className="mainWrapper">
+          <header>
+            <h1>Is The Book Better?</h1>
+            <p>Find out if your favourite book is better than the movie </p>
+            <form onSubmit={this.handleSubmit}>
+              <label className="visuallyHidden" htmlFor="searchBar">
+                Search Bar
               </label>
-            <input
-              type="search"
-              name="query"
-              id="searchBar"
-              onChange={this.handleChange}
-              value={this.state.query}
-              placeholder="Type a Book Title..."
-            />
-            <button type="submit" onClick={this.handleSubmit}>
-              Submit
+              <input
+                type="search"
+                name="query"
+                id="searchBar"
+                onChange={this.handleChange}
+                value={this.state.query}
+                placeholder="Type a Book Title..."
+              />
+              <button type="submit" onClick={this.handleSubmit}>
+                Submit
               </button>
-          </form>
-          <Recents recents={this.state.recent} doSearch={this.doRecentSearch} />
-        </header>
+            </form>
+            <Recents
+              recents={this.state.recent}
+              doSearch={this.doRecentSearch}
+            />
+          </header>
+        </div>
         {!this.state.loading ? (
           <>
-            <MainComp
-              scrollRef={this.ref}
-              isBookBetter={this.state.isBookBetter}
-              title={this.state.bookTitle}
-              movieImageUrl={this.state.movieImageUrl}
-              bookImageUrl={this.state.bookImageUrl}
-              bookAuthor={this.state.bookAuthor}
-            />
+            <div className="mainWrapper">
+              <MainComp
+                scrollRef={this.ref}
+                isBookBetter={this.state.isBookBetter}
+                title={this.state.bookTitle}
+                movieImageUrl={this.state.movieImageUrl}
+                bookImageUrl={this.state.bookImageUrl}
+                bookAuthor={this.state.bookAuthor}
+              />
+            </div>
             <Ratings
               bookScore={this.state.bookRating}
               movieScore={this.state.movieRating}
@@ -385,15 +388,17 @@ class App extends Component {
               movieId={this.state.movie.id}
               voted={this.state.voted}
             />
-            <Description
-              bookTitle={this.state.bookTitle}
-              movieTitle={this.state.movieTitle}
-              movieDescription={this.state.movieDescription}
-              bookDescription={this.state.bookDescription}
-            />
+            <div className="mainWrapper">
+              <Description
+                bookTitle={this.state.bookTitle}
+                movieTitle={this.state.movieTitle}
+                movieDescription={this.state.movieDescription}
+                bookDescription={this.state.bookDescription}
+              />
+            </div>
           </>
         ) : null}
-      </div>
+      </Fragment>
     );
   }
 }

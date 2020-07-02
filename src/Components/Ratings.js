@@ -14,7 +14,7 @@ const Ratings = ({
 }) => {
   return (
     <div className="ratings">
-      <div className="ratings-wrapper">
+      <div className="mainWrapper">
         <h3>Rating</h3>
         <div className="apiRatings">
           <Rating score={bookScore} medium="book" key="book-score" />
