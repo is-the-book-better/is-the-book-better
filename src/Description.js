@@ -9,8 +9,7 @@ const Description = ({movieDescription, bookDescription, bookTitle, movieTitle})
     <div className="descriptionWrapper">
       <div className="bookWrapper">
           <h2>{bookTitle}</h2>
-          {/* <p>{bookDescription.replace(/<(?:.|\n)*?>/gm, '')}</p> */}
-          <p>{bookDescription.replace(/<[^>]+>/g, '')}</p>
+          <p>{bookDescription.replace(/(<([^>]+)>)/ig,"")}</p>
       </div>
       <div className="movieWrapper">
           <h2>{movieTitle}</h2>
