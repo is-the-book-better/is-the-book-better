@@ -184,7 +184,6 @@ class App extends Component {
       });
 
       const bookObj = parser.parse(bookDetail.data);
-      console.log(bookObj);
       const book = bookObj.GoodreadsResponse.book;
       const moviesApi = await axios({
         method: "GET",
@@ -202,34 +201,27 @@ class App extends Component {
       const movies = moviesApi.data.results;
       const movie = movies[0];
 
-      if (!movie) {
+
+      if (movie && book) {
+        this.setState({
+          books,
+          book,
+          movies,
+          movie,
+          loading: false,
+        });
+      } else {
         Swal.fire({
           title: "Please Try Again",
           text: "Try Typing Valid Movie Title",
           icon: "error",
           confirmButtonColor: "#5da9c2",
         });
-      } else if (!book) {
-        Swal.fire({
-          title: "Please Try Again",
-          text: "Try Typing Valid Book Title",
-          icon: "error",
-          confirmButtonColor: "#5da9c2",
-        });
       }
-
-      this.setState({
-        books,
-        book,
-        movies,
-        movie,
-
-        loading: false,
-      });
 
       this.getBookDetails();
       this.getMovieDetails();
-
+      this.checkWhichIsBetter();
       // Update recent searches if search is successful
       if (
         this.state.movieTitle !== undefined &&
@@ -239,12 +231,11 @@ class App extends Component {
       }
       // Load Vote Count
       this.loadVotes(this.state.book.work.id, this.state.movie.id);
-
-      this.checkWhichIsBetter();
       this.ref.current.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
+
     } catch (error) {
       Swal.fire({
         title: "Please Try Again",
@@ -254,7 +245,6 @@ class App extends Component {
       });
     }
   };
-
   getBookDetails = () => {
     if (this.state.book) {
       const popBook = { ...this.state.book };
@@ -401,7 +391,6 @@ class App extends Component {
               movieDescription={this.state.movieDescription}
               bookDescription={this.state.bookDescription}
             />
-
           </>
         ) : null}
       </div>
