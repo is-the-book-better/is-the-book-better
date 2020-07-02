@@ -95,7 +95,7 @@ class App extends Component {
     // eslint-disable-next-line eqeqeq
     if (
       !this.state.moviesVotes[movieId] &&
-      this.state.moviesVotes[movieId] != 0
+      this.state.moviesVotes[movieId] !== 0
     ) {
       let newMovieVotes = this.state.moviesVotes;
       newMovieVotes[`${movieId}`] = 0;
@@ -107,6 +107,7 @@ class App extends Component {
   }
 
   doRecentSearch = (e) => {
+    console.log("performing");
     e.preventDefault();
     this.setState(
       {
@@ -165,6 +166,7 @@ class App extends Component {
         },
       });
 
+      console.log("got books");
       const books = this.parseXMLResponse(res.data);
 
       const bookId = books[0].best_book.id;
@@ -176,6 +178,7 @@ class App extends Component {
         },
       });
 
+      console.log("got book details");
       let bookObj = parser.parse(bookDetail.data);
       let book = bookObj.GoodreadsResponse.book;
       console.log(book);
@@ -192,6 +195,7 @@ class App extends Component {
         },
       });
 
+      console.log("got movies");
       // console.log(books);
       // const books = googleBooks.data.items;
       const movies = moviesApi.data.results;
