@@ -417,8 +417,7 @@ textarea {
 
 .mainCompWrapper .bookDiv img,
 .mainCompWrapper .movieDiv img {
-  max-width: 100%;
-  height: 100%;
+  width: 100%;
   padding: 1rem;
 }
 
@@ -583,7 +582,7 @@ textarea {
 .descriptionWrapper h2 {
   text-align: center;
   color: #261870;
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin: 5px;
 }
 
@@ -632,6 +631,7 @@ textarea {
   }
   .descriptionWrapper .bookWrapper h2, .descriptionWrapper .movieWrapper h2 {
     line-height: 48px;
+    text-align: left;
   }
 }
 
@@ -763,3 +763,7 @@ form button:hover, form button:focus {
 colors: $darkBlue, $lightBlue, $green
 fonts: $sans-serif, $serif
 */
+.mainWrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+}

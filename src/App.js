@@ -57,6 +57,7 @@ class App extends Component {
       })
       const bookObj = parser.parse(bookDetail.data);
       const book = bookObj.GoodreadsResponse.book;
+      console.log(book)
       const moviesApi = await axios({
         method: "GET",
         url: "https://api.themoviedb.org/3/search/movie?",
@@ -106,7 +107,7 @@ class App extends Component {
     } catch (error) {
       Swal.fire({
         title: 'Please Try Again',
-        text: 'Something went wrong, Try typing a movie or a book title',
+        text: 'Something went wrong. Try typing a movie or a book title',
         icon: 'error',
         confirmButtonColor: '#5da9c2',
       })
@@ -201,6 +202,7 @@ class App extends Component {
     return (
 
       <Fragment>
+        <div className="mainWrapper">
 
         <header>
           <h1>Is the Book Better?</h1>
@@ -213,7 +215,7 @@ class App extends Component {
         </header>
         {
           !this.state.loading ?
-            <>
+          <>
               <MainComp
                 scrollRef={this.ref}
                 isBookBetter={this.state.isBookBetter}
@@ -221,20 +223,21 @@ class App extends Component {
                 movieImageUrl={this.state.movieImageUrl}
                 bookImageUrl={this.state.bookImageUrl}
                 bookAuthor={this.state.bookAuthor}
-              />
+                />
               <Ratings
                 bookScore={this.state.bookRating}
                 movieScore={this.state.movieRating}
-              />
+                />
               <Description
                 bookTitle={this.state.bookTitle}
                 movieTitle={this.state.movieTitle}
                 movieDescription={this.state.movieDescription}
                 bookDescription={this.state.bookDescription}
-              />
+                />
             </> :
             null
-        }
+          }
+        </div>
       </Fragment>
     );
   }

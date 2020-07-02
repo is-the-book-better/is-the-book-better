@@ -20,7 +20,7 @@
     // border: 1px solid blue;
     text-align: center;
     color: $darkBlue;
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin: 5px;
 
     @include responsiveMedia(iPad) {
@@ -58,6 +58,7 @@
       line-height: 28px;
       h2 {
         line-height: 48px;
+        text-align: left;
       }
     }
 
