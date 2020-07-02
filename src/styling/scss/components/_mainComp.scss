@@ -45,11 +45,7 @@
   .imagesDiv {
     display: flex;
     justify-content: space-evenly;
-    // @include responsiveMedia(iPad) {
-    // }
-
-    // @include responsiveMedia(laptop) {
-    // }
+ 
   }
 
   .bookDiv,
@@ -68,7 +64,6 @@
     img {
       width: 100%;
       padding: 1rem;
-      @include responsiveMedia()
     }
   }
   h4 {
