@@ -675,6 +675,12 @@ textarea {
   width: 100%;
 }
 
+@media (min-width: 768px) {
+  .descriptionWrapper h3 {
+    font-size: 1.75rem;
+  }
+}
+
 .descriptionWrapper h4 {
   text-align: center;
   font-size: 2rem;

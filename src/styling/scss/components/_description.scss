@@ -23,8 +23,10 @@
     font-size: 1.25rem;
     margin-bottom: 1.25rem;
     width: 100%;
+    @include responsiveMedia(iPad) {
+      font-size: 1.75rem;
+    }
   }
-
   h4 {
     text-align: center;
     font-size: 2rem;
