@@ -28,7 +28,7 @@ const Rating = ({ score, medium }) => {
   // Render 5 icons as create in the array
   return (
     <div className="rating">
-      <h3>{score}</h3>
+      <h3>{score} / 5.0</h3>
       <div className="stars">
         {stars.map((star, index) => {
           return <i className={star} key={medium + "Star" + (index + 1)}></i>;
