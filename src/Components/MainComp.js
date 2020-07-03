@@ -1,4 +1,6 @@
+
 import React from "react";
+
 
 const MainComp = ({
   isBookBetter,
@@ -6,7 +8,9 @@ const MainComp = ({
   movieImageUrl,
   bookImageUrl,
   bookAuthor,
+
   scrollRef,
+
 }) => {
   return (
     <div ref={scrollRef} className="mainCompWrapper">

@@ -304,7 +304,9 @@ textarea {
 .mainWrapper{
   max-width: 1400px;
   margin: 0 auto;
-  // :nth-child(3){
-  //   width: 100%;
-  // } 
+}
+
+footer {
+  width: 100%;
+  text-align: center;
 }
