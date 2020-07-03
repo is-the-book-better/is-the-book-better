@@ -363,7 +363,7 @@ class App extends Component {
               id="searchBar"
               onChange={this.handleChange}
               value={this.state.query}
-              placeholder="Type a Book Title..."
+              placeholder="Enter a Book Title..."
             />
             <button type="submit" onClick={this.handleSubmit}>
               Submit
@@ -400,6 +400,7 @@ class App extends Component {
               movieDescription={this.state.movieDescription}
               bookDescription={this.state.bookDescription}
             />
+        <footer> &copy; Satvir, Tej and Krys</footer>
           </>
         ) : null}
       </div>
