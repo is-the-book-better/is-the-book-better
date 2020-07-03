@@ -33,7 +33,7 @@ const Recents = ({ recents, doSearch }) => {
 
   return (
     <Fragment>
-      <h2>Here's what other's are searching</h2>
+      <h2>Here's what others have searched for:</h2>
       <div className="recentContainer">
         <div className="recentSearches" id="recentSearches">
           {recents.map((search, index) => {
