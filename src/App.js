@@ -107,7 +107,7 @@ class App extends Component {
     }
   }
 
-
+  // when Click event happens set query state as the value 
   doRecentSearch = (e) => {
     e.preventDefault();
     this.setState(
@@ -156,7 +156,7 @@ class App extends Component {
     }
   }
 
-  // 
+  // Create an axios call to MovieDB, and GoodReads, Change GoodReads API XML to JSON
   searchResults = async () => {
     this.setState({
       ...this.state,
@@ -371,6 +371,7 @@ class App extends Component {
           </form>
           <Recents recents={this.state.recent} doSearch={this.doRecentSearch} />
         </header>
+        {/* If Loading is true add the results */}
         {!this.state.loading ? (
           <>
             <MainComp

@@ -1,11 +1,14 @@
 import React from 'react';
 
-
-const MainComp = ({ isBookBetter, title, movieImageUrl, bookImageUrl, bookAuthor, scrollRef }) => {
-
-
+const MainComp = ({
+  isBookBetter,
+  title,
+  movieImageUrl,
+  bookImageUrl,
+  bookAuthor,
+  scrollRef
+}) => {
   return (
-
     <div ref={scrollRef} className="mainCompWrapper">
       {isBookBetter ? <h2>Yup.</h2> : <h2>Nope.</h2>}
       <h3>{title}</h3>
