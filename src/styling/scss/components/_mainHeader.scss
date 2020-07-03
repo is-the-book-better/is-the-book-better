@@ -6,6 +6,9 @@ header {
   color: $darkBlue;
   text-align: center;
   height: 100vh;
+  @include responsiveMedia(smallLandscape) {
+    height: 100%;
+  }
   h1 {
     font-family: $serif;
     font-size: 3rem;

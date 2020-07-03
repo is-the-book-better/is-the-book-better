@@ -765,6 +765,12 @@ header {
   height: 100vh;
 }
 
+@media (max-height: 375px) {
+  header {
+    height: 100%;
+  }
+}
+
 header h1 {
   font-family: "Maitree", serif;
   font-size: 3rem;
