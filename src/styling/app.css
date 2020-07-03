@@ -680,6 +680,12 @@ footer {
   width: 100%;
 }
 
+@media (min-width: 768px) {
+  .descriptionWrapper h3 {
+    font-size: 1.75rem;
+  }
+}
+
 .descriptionWrapper h4 {
   text-align: center;
   font-size: 2rem;
@@ -762,6 +768,12 @@ header {
   color: #261870;
   text-align: center;
   height: 100vh;
+}
+
+@media (max-height: 375px) {
+  header {
+    height: 100%;
+  }
 }
 
 header h1 {

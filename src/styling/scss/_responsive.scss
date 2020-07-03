@@ -14,4 +14,10 @@
       @content;
     }
   }
+
+  @if $breakpoint == smallLandscape {
+    @media (max-height: 375px) {
+      @content;
+    }
+  }
 }
