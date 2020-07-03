@@ -14,13 +14,14 @@ const Ratings = ({
 }) => {
   return (
     <div className="ratings">
-      <div className="ratings-wrapper">
-        <h3>Rating</h3>
+      <div className="mainWrapper">
+        <h2>Ratings and Votes</h2>
+        {/* <h3>Rating</h3> */}
         <div className="apiRatings">
           <Rating score={bookScore} medium="book" key="book-score" />
           <Rating score={movieScore} medium="movie" key="movie-score" />
         </div>
-        <h3>Vote</h3>
+        {/* <h3>Vote</h3> */}
         <div className="voteRatings">
           <Vote
             medium="book"

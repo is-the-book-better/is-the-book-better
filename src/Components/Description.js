@@ -1,15 +1,24 @@
 import React from "react";
 
-const Description = ({ movieDescription, bookDescription, bookTitle, movieTitle }) => {
+
+const Description = ({
+  movieDescription,
+  bookDescription,
+  bookTitle,
+  movieTitle,
+}) => {
 
   return (
     <div className="descriptionWrapper">
+      <h2>Descriptions</h2>
       <div className="bookWrapper">
-        <h2>{bookTitle}</h2>
+
+        <h3>Book: {bookTitle}</h3>
         <p>{bookDescription.replace(/(<([^>]+)>)/ig, "")}</p>
       </div>
       <div className="movieWrapper">
-        <h2>{movieTitle}</h2>
+        <h3>Movie: {movieTitle}</h3>
+
         <p>{movieDescription}</p>
       </div>
     </div>
